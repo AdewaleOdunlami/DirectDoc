@@ -7,11 +7,7 @@ namespace DirectDoc2.Models
 {
     public class Invoice
     {
-        public int InvoiceID
-        {
-            get;
-            set;
-        }
+        public int InvoiceID { get; set; }
 
         [StringLength(50, MinimumLength = 2)]
         public string InvoiceTo { get; set; }
@@ -26,6 +22,8 @@ namespace DirectDoc2.Models
 
         [DataType(DataType.Time)]
         public DateTime InvoiceTime { get; set; }
+
+        public int ModalityID { get; set; }
 
         [DataType(DataType.Currency)]
         [Column(TypeName = "money")]
