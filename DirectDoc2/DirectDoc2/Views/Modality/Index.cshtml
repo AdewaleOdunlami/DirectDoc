@@ -1,0 +1,51 @@
+﻿@model IEnumerable<DirectDoc2.Models.Modality>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Modalities</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Tariff.TariffType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModalityCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tariff.TariffType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModalityCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ModalityID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ModalityID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ModalityID })
+        </td>
+    </tr>
+}
+
+</table>
