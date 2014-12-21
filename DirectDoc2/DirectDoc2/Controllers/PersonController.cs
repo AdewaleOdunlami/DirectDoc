@@ -18,7 +18,8 @@ namespace DirectDoc2.Controllers
         // GET: /Person/
         public ActionResult Index()
         {
-            return View(db.Clients.ToList());
+            var clients = db.Clients.Include(p => p.Sponsor);
+            return View(clients.ToList());
         }
 
         // GET: /Person/Details/5
@@ -39,6 +40,7 @@ namespace DirectDoc2.Controllers
         // GET: /Person/Create
         public ActionResult Create()
         {
+            ViewBag.SponsorID = new SelectList(db.Clients, "ID", "Title");
             return View();
         }
 
@@ -47,7 +49,7 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant")] Person person)
+        public ActionResult Create([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant,FullName")] Person person)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +58,7 @@ namespace DirectDoc2.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.SponsorID = new SelectList(db.Clients, "ID", "Title", person.SponsorID);
             return View(person);
         }
 
@@ -71,6 +74,7 @@ namespace DirectDoc2.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.SponsorID = new SelectList(db.Clients, "ID", "Title", person.SponsorID);
             return View(person);
         }
 
@@ -79,7 +83,7 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant")] Person person)
+        public ActionResult Edit([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant,FullName")] Person person)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +91,7 @@ namespace DirectDoc2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.SponsorID = new SelectList(db.Clients, "ID", "Title", person.SponsorID);
             return View(person);
         }
 

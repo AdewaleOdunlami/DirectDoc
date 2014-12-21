@@ -17,6 +17,14 @@
         @Html.ValidationSummary(true)
 
         <div class="form-group">
+            @Html.LabelFor(model => model.InvoiceNumber, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.InvoiceNumber)
+                @Html.ValidationMessageFor(model => model.InvoiceNumber)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.InvoiceTo, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.InvoiceTo)
@@ -25,10 +33,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.InvoiceNumber, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FullNameOfPatient, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.InvoiceNumber)
-                @Html.ValidationMessageFor(model => model.InvoiceNumber)
+                @Html.EditorFor(model => model.FullNameOfPatient)
+                @Html.ValidationMessageFor(model => model.FullNameOfPatient)
             </div>
         </div>
 
@@ -45,6 +53,14 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.InvoiceTime)
                 @Html.ValidationMessageFor(model => model.InvoiceTime)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Modalities, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Modalities)
+                @Html.ValidationMessageFor(model => model.Modalities)
             </div>
         </div>
 

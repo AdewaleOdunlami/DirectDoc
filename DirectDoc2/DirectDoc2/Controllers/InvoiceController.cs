@@ -47,7 +47,7 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="InvoiceID,InvoiceTo,InvoiceNumber,InvoiceDate,InvoiceTime,TotalAmount")] Invoice invoice)
+        public ActionResult Create([Bind(Include="InvoiceID,InvoiceNumber,InvoiceTo,FullNameOfPatient,InvoiceDate,InvoiceTime,TotalAmount")] Invoice invoice)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="InvoiceID,InvoiceTo,InvoiceNumber,InvoiceDate,InvoiceTime,TotalAmount")] Invoice invoice)
+        public ActionResult Edit([Bind(Include="InvoiceID,InvoiceNumber,InvoiceTo,FullNameOfPatient,InvoiceDate,InvoiceTime,TotalAmount")] Invoice invoice)
         {
             if (ModelState.IsValid)
             {

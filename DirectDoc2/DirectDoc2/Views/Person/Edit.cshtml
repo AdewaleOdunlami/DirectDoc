@@ -18,9 +18,9 @@
         @Html.HiddenFor(model => model.ID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SponsorID, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SponsorID, "SponsorID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SponsorID)
+                @Html.DropDownList("SponsorID", String.Empty)
                 @Html.ValidationMessageFor(model => model.SponsorID)
             </div>
         </div>
@@ -70,6 +70,14 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Dependant)
                 @Html.ValidationMessageFor(model => model.Dependant)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FullName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FullName)
+                @Html.ValidationMessageFor(model => model.FullName)
             </div>
         </div>
 

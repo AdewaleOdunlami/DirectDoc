@@ -12,11 +12,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.SponsorID)
+            @Html.DisplayNameFor(model => model.Sponsor.Title)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SponsorID)
+            @Html.DisplayFor(model => model.Sponsor.Title)
         </dd>
 
         <dt>
@@ -65,6 +65,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.Dependant)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
         </dd>
 
     </dl>

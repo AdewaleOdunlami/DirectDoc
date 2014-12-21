@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace DirectDoc2.Models
 {
@@ -11,27 +12,67 @@ namespace DirectDoc2.Models
 
     public class Person
     {
+        public Person(string firstName, string initials,
+             string lastName, DateTime dateOfBirth, string fullname = null, string sponsor = null, bool dependant = false)
+        {
+            this.sponsor = sponsor;
+            this.firstName = firstName;
+            this.initials = initials;
+            this.lastName = lastName;            
+            this.dateOfBirth = dateOfBirth;
+            this.dependant = dependant;
+            this.fullName = firstName + lastName;
+        }
+
+        public Person()
+        {
+        }
+
+        private string sponsor = null;
+        private string fullName = null;
+        private string firstName = null;
+        private string initials = null;
+        private string lastName = null;
+        private DateTime dateOfBirth = DateTime.Now;
+        private bool dependant = false;
+        
         public int ID { get; set; }
         public int? SponsorID { get; set; }
         public string Title { get; set; }
-
-        [Display(Name = "First Name")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
-        public string FirstName { get; set; }
-
-        public string Initials { get; set; }
-
-        [Display(Name = "Last Name")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
-        public string LastName { get; set; }
-  
+        public string FirstName 
+        {
+            get { return firstName; }
+            set { value = firstName; }
+        }
+        public string Initials
+        {
+            get { return initials; }
+            set { value = initials; }
+        }
+        public string LastName
+        {
+            get { return lastName; }
+            set { value = lastName; }
+        }
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime DateOfBirth { get; set; }
-
-        public bool Dependant { get; set; }
+        public DateTime DateOfBirth
+        {
+            get { return dateOfBirth; }
+            set { value = dateOfBirth; }
+        }
+        public bool Dependant
+        {
+            get { return dependant; }
+            set { value = dependant; }
+        }
         public List<Phone> Contacts { get; set; }
-
+        public string FullName
+        {
+            get { return fullName; }
+            set { value = fullName; }
+        }
+        
+        public virtual Person Sponsor { get; set; }
     }
 
 }

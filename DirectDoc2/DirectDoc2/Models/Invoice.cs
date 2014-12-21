@@ -7,37 +7,41 @@ namespace DirectDoc2.Models
 {
     public class Invoice
     {
-        public int InvoiceID { get; set; }
-
-        [StringLength(50, MinimumLength = 2)]
-        public string InvoiceTo { get; set; }
-
-        public int InvoiceNumber { get; set; }
-
-        public Person FullNameOfPatient { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime InvoiceDate { get; set; }
-
-        [DataType(DataType.Time)]
-        public DateTime InvoiceTime { get; set; }
-
-        public int ModalityID { get; set; }
-
-        [DataType(DataType.Currency)]
-        [Column(TypeName = "money")]
-        public decimal TotalAmount { get; set; }
-
-        //public Physician Physician { get; set; }
-        public Modality Modality { get; set; }
-
-        public List<Modality> Modalities { get; set; }
-
         public Invoice()
         {
-            Person person= new Person();
-            InvoiceTo = person.FirstName + person.LastName;
+            Person sponsor = new Person();
+            Person patient = new Person();
+
+            fullNameOfSponsor = sponsor.FirstName + " " + sponsor.Initials + " " + sponsor.LastName;
+            fullNameOfPatient = patient.FirstName + " " + patient.Initials + " " + patient.LastName;
+
+            modalitiesList = new List<Modality>();
         }
+
+        private List<Modality> modalitiesList;
+        private string fullNameOfPatient;
+        private string fullNameOfSponsor;
+    
+        public int InvoiceID { get; set; }
+        public int InvoiceNumber { get; set; }
+        public string InvoiceTo
+        {
+            get { return fullNameOfSponsor; }
+            set { value = fullNameOfSponsor; }
+        }
+        public string FullNameOfPatient
+        {
+            get { return fullNameOfPatient; }
+            set { value = fullNameOfPatient; }
+        }
+        public DateTime InvoiceDate { get; set; }
+        public DateTime InvoiceTime { get; set; }
+        //public Physician Physician { get; set; }
+        public List<Modality> Modalities 
+        { 
+            get { return modalitiesList; }
+            set { value = modalitiesList; }
+        }
+        public decimal TotalAmount { get; set; }
     }
 }

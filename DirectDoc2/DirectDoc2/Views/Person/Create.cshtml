@@ -16,10 +16,10 @@
         <hr />
         @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SponsorID, new { @class = "control-label col-md-2" })
+        <div class="form-group sponsor">
+            @Html.LabelFor(model => model.SponsorID, "SponsorID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SponsorID)
+                @Html.DropDownList("SponsorID", String.Empty)
                 @Html.ValidationMessageFor(model => model.SponsorID)
             </div>
         </div>
@@ -64,11 +64,19 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="dependant">
             @Html.LabelFor(model => model.Dependant, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Dependant)
                 @Html.ValidationMessageFor(model => model.Dependant)
+            </div>
+        </div>
+
+        <div class="form-group" id="fullname">
+            @Html.LabelFor(model => model.FullName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FullName)
+                @Html.ValidationMessageFor(model => model.FullName)
             </div>
         </div>
 
@@ -86,4 +94,26 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+<script>
+    $(".sponsor").hide();
+
+    $("#dependant").click(function () {
+        $(".sponsor").toggle();
+    });
+
+    function fullName() {
+        $("#fullname").attr('readonly', true);
+
+        var $firstName = $("#firstname").val();
+        var $initials = $("#initials").val();
+        var $lastName = $("#lastname").val();
+        var $name = $firstName + " " + $initials + " " + $lastName;
+
+        return $name;
+    };
+
+    $('#fullname').val(fullName);
+</script>
+
 }

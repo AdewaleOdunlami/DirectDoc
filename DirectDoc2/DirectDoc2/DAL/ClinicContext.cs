@@ -27,6 +27,7 @@ namespace DirectDoc2.DAL
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Configurations.Add(new TariffConfiguration());
             modelBuilder.Configurations.Add(new ModalityConfiguration());
+            modelBuilder.Configurations.Add(new PersonConfiguration());
         }
     }
 
@@ -47,7 +48,17 @@ namespace DirectDoc2.DAL
             Property(m => m.ModalityCode).IsRequired().HasMaxLength(500);
             Property(m => m.Description).IsRequired().HasMaxLength(500);
             Property(m => m.Price).IsRequired().HasColumnType("money");
-            
+        }
+    }
+
+    public class PersonConfiguration : EntityTypeConfiguration<Person>
+    {
+        public PersonConfiguration()
+        {
+            Property(p => p.FirstName).IsRequired().HasMaxLength(500);
+            Property(p => p.Title).IsRequired();
+            Property(p => p.LastName).IsRequired().HasMaxLength(500);
+           // Property(p => p.DateOfBirth).HasColumnType("date");
         }
     }
 }
