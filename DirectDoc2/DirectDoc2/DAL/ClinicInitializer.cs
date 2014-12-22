@@ -34,6 +34,20 @@ namespace DirectDoc2.DAL
 
             modality.ForEach(t => context.Modalities.Add(t));
             context.SaveChanges();
+
+            var client = new List<Person>
+            {
+                new Person{
+                    SponsorID = null, Title = "Mr", FirstName = "Adewale", Initials = "",
+                    LastName = "Odunlami", DateOfBirth = Convert.ToDateTime("15-Jan-1986"), Dependant = false},
+
+                new Person{
+                    SponsorID = 1, Title = "Mr", FirstName = "Oreoluwa", Initials = "O.",
+                    LastName = "Odunlami", DateOfBirth = Convert.ToDateTime("15-Jan-1986"), Dependant = true}
+            };
+
+            client.ForEach(t => context.Clients.Add(t));
+            context.SaveChanges();
         }
     }
 }

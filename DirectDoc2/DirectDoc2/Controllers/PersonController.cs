@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DirectDoc2.Models;
 using DirectDoc2.DAL;
+using System.Collections;
 
 namespace DirectDoc2.Controllers
 {
@@ -40,7 +41,23 @@ namespace DirectDoc2.Controllers
         // GET: /Person/Create
         public ActionResult Create()
         {
-            ViewBag.SponsorID = new SelectList(db.Clients, "ID", "Title");
+            List<Person> clients = new List<Person>(db.Clients);
+            var sponsors = from d in clients
+                           where d.Dependant == false
+                           select d.FullName;
+
+
+            foreach (var item in sponsors)
+            {
+               var listOfSponsors = new SelectList(new[] {sponsors});
+            }
+
+
+
+
+            //ViewBag.SponsorID = new SelectList(db.Clients, "ID", "FullName");
+            ViewBag.Sponsor = new SelectList(sponsors);
+
             return View();
         }
 
@@ -49,8 +66,9 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant,FullName")] Person person)
+        public ActionResult Create([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant")] Person person)
         {
+
             if (ModelState.IsValid)
             {
                 db.Clients.Add(person);
@@ -58,7 +76,7 @@ namespace DirectDoc2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SponsorID = new SelectList(db.Clients, "ID", "Title", person.SponsorID);
+            ViewBag.SponsorID = new SelectList(db.Clients, "ID", "FullName", person.ID);
             return View(person);
         }
 
@@ -83,7 +101,7 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant,FullName")] Person person)
+        public ActionResult Edit([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant")] Person person)
         {
             if (ModelState.IsValid)
             {

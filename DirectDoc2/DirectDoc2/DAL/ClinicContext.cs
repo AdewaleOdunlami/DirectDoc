@@ -58,7 +58,6 @@ namespace DirectDoc2.DAL
             Property(p => p.FirstName).IsRequired().HasMaxLength(500);
             Property(p => p.Title).IsRequired();
             Property(p => p.LastName).IsRequired().HasMaxLength(500);
-           // Property(p => p.DateOfBirth).HasColumnType("date");
         }
     }
 }

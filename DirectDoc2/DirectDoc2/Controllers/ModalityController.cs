@@ -11,6 +11,7 @@ using DirectDoc2.DAL;
 
 namespace DirectDoc2.Controllers
 {
+    [Authorize]
     public class ModalityController : Controller
     {
         private ClinicContext db = new ClinicContext();
