@@ -1,13 +1,13 @@
 ﻿@model DirectDoc2.Models.Person
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "New Client";
 }
 
 <h2>Create</h2>
 
 
-@using (Html.BeginForm("Create","Person")) 
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
@@ -19,7 +19,7 @@
         <div class="form-group sponsor">
             @Html.LabelFor(model => model.SponsorID, "Sponsor", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Sponsor", String.Empty)
+                @Html.DropDownList("SponsorID", String.Empty)
                 @Html.ValidationMessageFor(model => model.SponsorID)
             </div>
         </div>

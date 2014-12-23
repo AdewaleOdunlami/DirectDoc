@@ -14,8 +14,8 @@ namespace DirectDoc2.Controllers
 {
     public class PersonController : Controller
     {
-        private ClinicContext db = new ClinicContext();
-
+        private ClinicContext db = new ClinicContext(); 
+        
         // GET: /Person/
         public ActionResult Index()
         {
@@ -41,22 +41,12 @@ namespace DirectDoc2.Controllers
         // GET: /Person/Create
         public ActionResult Create()
         {
-            List<Person> clients = new List<Person>(db.Clients);
-            var sponsors = from d in clients
+            var sponsors = from d in db.Clients
                            where d.Dependant == false
-                           select d.FullName;
-
-
-            foreach (var item in sponsors)
-            {
-               var listOfSponsors = new SelectList(new[] {sponsors});
-            }
-
-
-
+                           select d;
 
             //ViewBag.SponsorID = new SelectList(db.Clients, "ID", "FullName");
-            ViewBag.Sponsor = new SelectList(sponsors);
+            ViewBag.SponsorID = new SelectList(sponsors,"ID","FullName");
 
             return View();
         }
@@ -68,6 +58,9 @@ namespace DirectDoc2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant")] Person person)
         {
+            var sponsors = from d in db.Clients
+                            where d.Dependant == false
+                            select d;
 
             if (ModelState.IsValid)
             {
@@ -76,7 +69,8 @@ namespace DirectDoc2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SponsorID = new SelectList(db.Clients, "ID", "FullName", person.ID);
+            //ViewBag.SponsorID = new SelectList(db.Clients, "ID", "FullName", person.ID);
+            ViewBag.SponsorID = new SelectList(sponsors,"ID","FullName", person.ID);
             return View(person);
         }
 
