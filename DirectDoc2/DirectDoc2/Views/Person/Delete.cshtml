@@ -17,14 +17,30 @@
             @Html.DisplayNameFor(model => model.Sponsor)
         </dt>
 
-        <dd>
+        
            @* @Html.DisplayFor(model => model.SponsorID)*@
            @{ClinicContext db = new ClinicContext();
-             var sponsor = from s in db.Clients
-                           where s.ID == Model.SponsorID
-                           select s.FullName;}
-            @sponsor.ToString();
-        </dd>
+             var dependant =  
+                            from p in db.Clients
+                                where (p.ID == Model.ID) && (p.SponsorID != null)
+                                select p;
+                            
+            var sponsor = (from p in dependant                              
+                                select p.SponsorID);
+                                
+            var nameOfSponsor = from p in db.Clients
+                                 where p.ID.ToString() == sponsor.ToString()
+                                 select p.FullName;
+                           
+                if(nameOfSponsor != null)
+                {
+                    <dd>@nameOfSponsor</dd>
+                }
+                else if(nameOfSponsor == null)
+                {
+                    <dd>@String.Empty</dd>
+                }
+            }
 
         <dt>
             @Html.DisplayNameFor(model => model.Title)
