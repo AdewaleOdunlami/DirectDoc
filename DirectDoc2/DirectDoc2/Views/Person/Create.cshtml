@@ -19,7 +19,7 @@
         <div class="form-group sponsor">
             @Html.LabelFor(model => model.SponsorID, "Sponsor", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("SponsorID", String.Empty)
+                @Html.DropDownList("SponsorID", "--Select Sponsor--")
                 @Html.ValidationMessageFor(model => model.SponsorID)
             </div>
         </div>
@@ -104,5 +104,25 @@
         $(".sponsor").toggle();
     });
 
+    //var one; var two; var three;
+
+    //$('#FirstName').focusout(function () {
+    //    one = $(this).val();
+    //});
+
+    //$('#Initials').focusout(function () {
+    //    two = one + " " + $(this).val();
+    //});
+
+    //$('#LastName').focusout(function () {
+    //    three = two + " " + $(this).val();
+    //});
+
+    //$('.btn-default').click(function () {
+    //    if(($("#Dependant").val == true) && $("#"))
+    //    {
+
+    //    }
+    //});
 </script>
 }

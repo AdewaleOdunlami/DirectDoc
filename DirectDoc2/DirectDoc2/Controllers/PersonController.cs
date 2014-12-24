@@ -77,6 +77,10 @@ namespace DirectDoc2.Controllers
         // GET: /Person/Edit/5
         public ActionResult Edit(int? id)
         {
+            var sponsors = from d in db.Clients
+                           where d.Dependant == false
+                           select d;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -86,7 +90,7 @@ namespace DirectDoc2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.SponsorID = new SelectList(db.Clients, "ID", "Title", person.SponsorID);
+            ViewBag.SponsorID = new SelectList(sponsors, "ID", "FullName", person.SponsorID);
             return View(person);
         }
 
@@ -97,13 +101,17 @@ namespace DirectDoc2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant")] Person person)
         {
+            var sponsors = from d in db.Clients
+                           where d.Dependant == false
+                           select d;
+
             if (ModelState.IsValid)
             {
                 db.Entry(person).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.SponsorID = new SelectList(db.Clients, "ID", "Title", person.SponsorID);
+            ViewBag.SponsorID = new SelectList(db.Clients, "ID", "FullName", person.SponsorID);
             return View(person);
         }
 

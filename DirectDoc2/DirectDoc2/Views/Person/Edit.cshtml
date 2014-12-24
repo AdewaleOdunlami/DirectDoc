@@ -17,10 +17,10 @@
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.ID)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SponsorID, "SponsorID", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("SponsorID", String.Empty)
+        <div class="form-group sponsor">
+            @Html.LabelFor(model => model.SponsorID, "Sponsor", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" id="listofsponsors">
+                @Html.DropDownList("SponsorID", "--Select Sponsor--")
                 @Html.ValidationMessageFor(model => model.SponsorID)
             </div>
         </div>
@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group dependant">
             @Html.LabelFor(model => model.Dependant, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Dependant)
@@ -75,7 +75,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Update" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -87,4 +87,19 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(".dependant").hide();
+
+        $(".btn").click(function () {
+            if ($("#SponsorID").find(":selected").text() === "--Select Sponsor--")
+            {
+                $("#Dependant").attr('checked',false);
+            }
+            if ($("#SponsorID").find(":selected").text() !== "--Select Sponsor--")
+            {
+                $("#Dependant").attr('checked', true);
+            }
+        });
+    </script>
 }
