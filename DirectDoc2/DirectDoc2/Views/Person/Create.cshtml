@@ -65,9 +65,9 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group dependant">
             @Html.LabelFor(model => model.Dependant, new { @class = "control-label col-md-2" })
-            <div class="col-md-10" id="dependant">
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Dependant)
                 @Html.ValidationMessageFor(model => model.Dependant)
             </div>
@@ -97,32 +97,16 @@
     @Scripts.Render("~/bundles/jqueryval")
 
 <script>
-    $(".sponsor").hide();
+    $(".dependant").hide();
     $(".fullname").hide();
 
-    $("#dependant").click(function () {
-        $(".sponsor").toggle();
+    $(".btn").click(function () {
+        if ($("#SponsorID").find(":selected").text() === "--Select Sponsor--") {
+            $("#Dependant").attr('checked', false);
+        }
+        if ($("#SponsorID").find(":selected").text() !== "--Select Sponsor--") {
+            $("#Dependant").attr('checked', true);
+        }
     });
-
-    //var one; var two; var three;
-
-    //$('#FirstName').focusout(function () {
-    //    one = $(this).val();
-    //});
-
-    //$('#Initials').focusout(function () {
-    //    two = one + " " + $(this).val();
-    //});
-
-    //$('#LastName').focusout(function () {
-    //    three = two + " " + $(this).val();
-    //});
-
-    //$('.btn-default').click(function () {
-    //    if(($("#Dependant").val == true) && $("#"))
-    //    {
-
-    //    }
-    //});
 </script>
 }
