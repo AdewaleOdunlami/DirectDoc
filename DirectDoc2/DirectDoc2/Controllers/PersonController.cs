@@ -17,9 +17,37 @@ namespace DirectDoc2.Controllers
         private ClinicContext db = new ClinicContext(); 
         
         // GET: /Person/
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchText)
         {
-            var clients = db.Clients.Include(p => p.Sponsor);
+            ViewBag.FirstNameSortParm = String.IsNullOrEmpty(sortOrder) ? "first_name_desc" : "";
+            ViewBag.LastNameSortParm = String.IsNullOrEmpty(sortOrder) ? "last_name_desc" : "";
+            //ViewBag.SponsorSortParm = String.IsNullOrEmpty(sortOrder) ? "sponsor_name_desc" : "";
+
+            var clients = from c in db.Clients
+                          select c;
+
+            if (!String.IsNullOrEmpty(searchText))
+            {
+                clients = clients.Where(c => c.LastName.Contains(searchText)
+                                || c.FirstName.Contains(searchText));
+            }
+
+            switch (sortOrder)
+            {
+                case "first_name_desc":
+                    clients = clients.OrderByDescending(s => s.FirstName);
+                    break;
+                case "last_name_desc":
+                    clients = clients.OrderByDescending(s => s.LastName);
+                    break;
+                //case "sponsor_name_desc":
+                //    clients = clients.OrderByDescending(s => s.Sponsor);
+                //    break;
+                default:
+                    clients = clients.OrderBy(s => s.LastName);
+                    break;
+            }
+            //var clients = db.Clients.Include(p => p.Sponsor);
             return View(clients.ToList());
         }
 
@@ -116,6 +144,7 @@ namespace DirectDoc2.Controllers
         }
 
         // GET: /Person/Delete/5
+        [HandleError(ExceptionType = typeof(System.Data.DataException), View = "DatabaseError")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -123,21 +152,25 @@ namespace DirectDoc2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Person person = db.Clients.Find(id);
+
             if (person == null)
             {
                 return HttpNotFound();
             }
+
             return View(person);
         }
 
         // POST: /Person/Delete/5
+        [HandleError(ExceptionType = typeof(System.Data.DataException), View = "DatabaseError")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Person person = db.Clients.Find(id);
-            db.Clients.Remove(person);
-            db.SaveChanges();
+                db.Clients.Remove(person);
+                db.SaveChanges();
+            
             return RedirectToAction("Index");
         }
 

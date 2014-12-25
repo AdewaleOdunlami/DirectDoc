@@ -25,6 +25,7 @@ namespace DirectDoc2.Models
         public string LastName { get; set; }
         [DataType(DataType.Date)]
         [Display(Name="Date of birth")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
         public bool Dependant { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
