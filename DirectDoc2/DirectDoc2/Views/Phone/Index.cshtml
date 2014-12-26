@@ -1,0 +1,51 @@
+﻿@model IEnumerable<DirectDoc2.Models.Phone>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Person)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AreaCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Person)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AreaCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Number)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PhoneID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PhoneID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PhoneID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,4 +1,5 @@
 ﻿@model DirectDoc2.Models.Person
+@using DirectDoc2.DAL;
 
 @{
     ViewBag.Title = "Details";
@@ -66,6 +67,59 @@
             @Html.DisplayFor(model => model.Dependant)
         </dd>
 
+        <dt>
+            Address
+        </dt>
+        <dd>
+            @{
+                ClinicContext db = new ClinicContext();
+                var address = from a in db.PostalAddresses
+                              where a.PersonID == Model.ID
+                              select a;
+
+                if (address.Any())
+                {
+                     foreach(var ad in address)
+                        {
+                            @ad.BoxNumber<br />
+                            @ad.City<br />
+                            @ad.Country
+                        } 
+                }
+
+                else
+                {
+                    @Html.ActionLink("Add Address", "Create", "Address")
+                }
+
+            }
+        </dd>
+        <dt>
+            Phone numbers
+        </dt>
+        <dd>
+            @{
+                var phones = from p in db.Phones
+                              where p.PersonID == Model.ID
+                              select p;
+
+                if (phones.Any())
+                {
+                    foreach (var phone in phones)
+                    {
+                        @phone.PhoneType<br />
+                        @phone.AreaCode<br />
+                        @phone.Number
+                    }
+                }
+
+                else
+                {
+                    @Html.ActionLink("Add Phone", "Create", "Phone")
+                }
+
+            }
+        </dd>
     </dl>
 </div>
 <p>
