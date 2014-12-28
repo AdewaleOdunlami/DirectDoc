@@ -55,16 +55,16 @@ namespace DirectDoc2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="PhoneID,PersonID,PhoneType,AreaCode,Number")] Phone phone)
         {
+            var sponsors = from c in db.Clients
+                           where c.Dependant == false
+                           select c;
+
             if (ModelState.IsValid)
             {
                 db.Phones.Add(phone);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            var sponsors = from c in db.Clients
-                           where c.Dependant == false
-                           select c;
 
             ViewBag.PersonID = new SelectList(sponsors, "ID", "FullName", phone.PersonID);
             return View(phone);
