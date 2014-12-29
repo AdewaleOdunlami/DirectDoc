@@ -11,6 +11,7 @@ using DirectDoc2.DAL;
 
 namespace DirectDoc2.Controllers
 {
+    [Authorize]
     public class PhoneController : Controller
     {
         private ClinicContext db = new ClinicContext();

@@ -11,14 +11,16 @@ using DirectDoc2.DAL;
 
 namespace DirectDoc2.Controllers
 {
+    [Authorize]
     public class AddressController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
         // GET: /Address/
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchText)
         {
             var postaladdresses = db.PostalAddresses.Include(p => p.Person);
+            //var postaladdresses = postaladdress.Include(p => p.Person);
             return View(postaladdresses.ToList());
         }
 
@@ -36,6 +38,7 @@ namespace DirectDoc2.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(postaladdress);
         }
 
@@ -75,6 +78,10 @@ namespace DirectDoc2.Controllers
         // GET: /Address/Edit/5
         public ActionResult Edit(int? id)
         {
+            var sponsors = from d in db.Clients
+                           where d.Dependant == false
+                           select d;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -84,7 +91,7 @@ namespace DirectDoc2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title", postaladdress.PersonID);
+            ViewBag.PersonID = new SelectList(sponsors, "ID", "FullName", postaladdress.PersonID);
             return View(postaladdress);
         }
 
@@ -95,13 +102,17 @@ namespace DirectDoc2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="PostalAddressID,PersonID,BoxNumber,City,Country")] PostalAddress postaladdress)
         {
+            var sponsors = from d in db.Clients
+                           where d.Dependant == false
+                           select d;
+
             if (ModelState.IsValid)
             {
                 db.Entry(postaladdress).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title", postaladdress.PersonID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", postaladdress.PersonID);
             return View(postaladdress);
         }
 

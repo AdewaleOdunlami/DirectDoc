@@ -12,6 +12,7 @@ using System.Collections;
 
 namespace DirectDoc2.Controllers
 {
+    [Authorize]
     public class PersonController : Controller
     {
         private ClinicContext db = new ClinicContext(); 
@@ -106,7 +107,7 @@ namespace DirectDoc2.Controllers
         public ActionResult Edit(int? id)
         {
             var sponsors = from d in db.Clients
-                           where d.Dependant == false
+                           where d.Dependant == false && d.ID != id
                            select d;
 
             if (id == null)
@@ -130,7 +131,7 @@ namespace DirectDoc2.Controllers
         public ActionResult Edit([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant")] Person person)
         {
             var sponsors = from d in db.Clients
-                           where d.Dependant == false
+                           where d.Dependant == false && d.ID != person.ID
                            select d;
 
             if (ModelState.IsValid)
@@ -139,7 +140,7 @@ namespace DirectDoc2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.SponsorID = new SelectList(db.Clients, "ID", "FullName", person.SponsorID);
+            ViewBag.SponsorID = new SelectList(sponsors, "ID", "FullName", person.SponsorID);
             return View(person);
         }
 

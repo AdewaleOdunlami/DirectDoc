@@ -1,4 +1,5 @@
 ﻿@model DirectDoc2.Models.PostalAddress
+@using DirectDoc2.DAL;
 
 @{
     ViewBag.Title = "Delete";
@@ -6,18 +7,36 @@
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this address?</h3>
 <div>
     <h4>PostalAddress</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Person.Title)
+            @*@Html.DisplayNameFor(model => model.Person)*@
+            Name
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Person.Title)
-        </dd>
+            @*@Html.DisplayFor(model => model.Person.Title)*@
+            @{
+                ClinicContext db = new ClinicContext();
+                var fullName = from f in db.Clients
+                               where f.ID == Model.PersonID
+                               select f;
+
+                if (fullName.Any())
+                {
+                    foreach (var p in fullName)
+                    {
+                    <dd>@p.FullName</dd>
+                    }
+                }
+                else
+                {
+
+                }
+
+            }
 
         <dt>
             @Html.DisplayNameFor(model => model.BoxNumber)

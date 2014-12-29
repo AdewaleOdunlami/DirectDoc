@@ -11,13 +11,13 @@
     <h4>Person</h4>
 	<hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Sponsor)
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Sponsor.Sponsor)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Sponsor.FullName)
-        </dd>
+            @Html.DisplayFor(model => model.Sponsor.SponsorID)
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Title)
@@ -70,6 +70,7 @@
         <dt>
             Address
         </dt>
+
         <dd>
             @{
                 ClinicContext db = new ClinicContext();
@@ -79,24 +80,26 @@
 
                 if (address.Any())
                 {
-                     foreach(var ad in address)
-                        {
-                            @ad.BoxNumber<br />
-                            @ad.City<br />
-                            @ad.Country
-                        } 
+                    foreach (var ad in address)
+                    {
+                        <text>
+                        @ad.BoxNumber, @ad.City, @ad.Country 
+                        </text><br />
+                    }
                 }
 
                 else
                 {
-                    @Html.ActionLink("Add Address", "Create", "Address")
+                    @: none
                 }
 
             }
         </dd>
+
         <dt>
             Phone numbers
         </dt>
+
         <dd>
             @{
                 var phones = from p in db.Phones
@@ -107,7 +110,7 @@
                 {
                     foreach (var phone in phones)
                     {
-                        @phone.PhoneType @: @phone.AreaCode @:- @phone.Number
+                        <text>(</text>@phone.PhoneType<text>)</text>  @phone.AreaCode @:- @phone.Number <br />
                     }
                 }
 
@@ -118,6 +121,15 @@
 
             }
         </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>*@
+
     </dl>
 </div>
 <p>

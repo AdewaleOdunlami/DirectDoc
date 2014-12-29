@@ -1,4 +1,5 @@
 ﻿@model DirectDoc2.Models.PostalAddress
+@using DirectDoc2.DAL;
 
 @{
     ViewBag.Title = "Details";
@@ -14,9 +15,28 @@
             @Html.DisplayNameFor(model => model.Person.FullName)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Person.FullName)
-        </dd>
+       @* <dd>*@
+            @*@Html.DisplayFor(model => model.Person.FullName)*@
+            @{
+                ClinicContext db = new ClinicContext();
+                var fullName = from f in db.Clients
+                                where f.ID == Model.PersonID
+                                select f;
+                
+                if(fullName.Any())
+                {
+                    foreach(var p in fullName)
+                    {
+                        <dd>@p.FullName</dd>
+                    } 
+                }
+                else
+                {
+                    
+                }
+                        
+            }
+        @*</dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.BoxNumber)
