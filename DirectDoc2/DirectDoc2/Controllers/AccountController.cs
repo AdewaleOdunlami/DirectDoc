@@ -63,7 +63,7 @@ namespace DirectDoc2.Controllers
 
         //
         // GET: /Account/Register
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
