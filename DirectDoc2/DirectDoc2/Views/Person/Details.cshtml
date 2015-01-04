@@ -1,8 +1,14 @@
 ﻿@model DirectDoc2.Models.Person
 @using DirectDoc2.DAL;
+@using DirectDoc2.Models
 
 @{
     ViewBag.Title = "Details";
+}
+
+@{
+    ClinicContext db = new ClinicContext();
+    Tariff tariff = new Tariff();
 }
 
 <h2>Details</h2>
@@ -68,12 +74,53 @@
         </dd>
 
         <dt>
+            Insurance
+        </dt>
+
+        <dd>
+            @{
+                var insurance = from i in db.MedicalAids
+                                where i.PersonID == Model.ID
+                                select i;
+                                
+                var insurance_tariff = from i in db.MedicalAids
+                                        join t in db.Tariffs on
+                                        i.TariffID equals t.ID into insure
+                                        from ins in insure
+                                        select ins;
+
+                if (insurance.Any())
+                {
+                    foreach (var insure in insurance)
+                    {
+                        <text>Name:</text> @insure.NameOfAid <br />
+                        <text>Policy Number:</text> @insure.PolicyNumber <br />
+                    }
+                    
+                    if (insurance_tariff.Any())
+                    {
+                        foreach (var insure in insurance_tariff)
+                        {
+                            <text>Tariff:</text> @insure.TariffType
+                        }
+                    }
+                }
+
+                else
+                {
+                    @Html.ActionLink("Add Insurance", "Index", "Medical");
+                }
+
+            }
+        </dd>
+
+        <dt>
             Address
         </dt>
 
         <dd>
             @{
-                ClinicContext db = new ClinicContext();
+                
                 var address = from a in db.PostalAddresses
                               where a.PersonID == Model.ID
                               select a;

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<DirectDoc2.Models.MedicalAid>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Person)*@
+            Client Name
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NameOfAid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PolicyNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tariff.TariffType)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Person.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NameOfAid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PolicyNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tariff.TariffType)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MedicalAidID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MedicalAidID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MedicalAidID })
+        </td>
+    </tr>
+}
+
+</table>

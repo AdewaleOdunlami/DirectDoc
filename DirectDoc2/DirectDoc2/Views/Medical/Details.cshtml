@@ -1,0 +1,89 @@
+﻿@model DirectDoc2.Models.MedicalAid
+@using DirectDoc2.DAL
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@{
+    ClinicContext db = new ClinicContext();
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MedicalAid</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @*@Html.DisplayNameFor(model => model.Person.Title)*@
+            Client Name
+        </dt>
+
+        @*<dd>
+            @Html.DisplayFor(model => model.Person.FullName)
+        </dd>*@
+            @{
+                //ClinicContext db = new ClinicContext();
+                var person = from p in db.Clients
+                             where p.ID == Model.PersonID
+                             select p;
+
+                if (person.Any())
+                {
+                    foreach (var p in person)
+                    {
+                        <dd>
+                            @p.FullName
+                        </dd>
+                    }
+                }
+
+
+            }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NameOfAid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameOfAid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PolicyNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PolicyNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tariff.TariffType)
+        </dt>
+
+            @{
+                var tariff = from t in db.Tariffs
+                                where t.ID == Model.TariffID
+                                select t;
+
+                if (tariff.Any())
+                {
+                    foreach (var t in tariff)
+                    {
+                        <dd>
+                            @t.TariffType
+                        </dd>
+                    }
+                }
+                }
+        @*<dd>
+            @Html.DisplayFor(model => model.Tariff.TariffType)
+        </dd>*@
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MedicalAidID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
