@@ -11,6 +11,7 @@ namespace DirectDoc2.Models
     public class Person
     {
         public int ID { get; set; }
+        [Display(Name="Main member")]
         public int? SponsorID { get; set; }
         [Required]
         public string Title { get; set; }

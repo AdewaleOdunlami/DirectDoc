@@ -5,6 +5,7 @@ namespace DirectDoc2.Models
     public class Phone
     {
         public int PhoneID { get; set; }
+        [Display(Name="Main member")]
         public int? PersonID { get; set; }
         [Required]
         [Display(Name="Phone type")]

@@ -6,10 +6,10 @@ namespace DirectDoc2.Models
     public class Modality
     {
         public int ModalityID { get; set; }
-        
+        [Display(Name="Tariff")]
         public int TariffID { get; set; }
 
-        [Display(Name = "Modality")]
+        [Display(Name = "Code")]
         public string ModalityCode { get; set; }
 
         public string Description { get; set; }

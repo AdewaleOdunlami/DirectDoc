@@ -6,7 +6,7 @@ namespace DirectDoc2.Models
     public class PostalAddress
     {  
         public int PostalAddressID { get; set; }
-        [Display(Name="Address Owner")]
+        [Display(Name="Main member")]
         public int? PersonID { get; set; }
         [Display(Name="Box Number")]
         public int? BoxNumber { get; set; }

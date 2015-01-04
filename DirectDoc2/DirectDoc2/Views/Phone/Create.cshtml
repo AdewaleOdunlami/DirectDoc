@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>New Phone</h2>
+<h2>Create</h2>
 
 
 @using (Html.BeginForm()) 
@@ -17,7 +17,7 @@
         @Html.ValidationSummary(true)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PersonID, "Person", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PersonID, "Main member", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("PersonID", String.Empty)
                 @Html.ValidationMessageFor(model => model.PersonID)
@@ -27,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PhoneType, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("PhoneType", new SelectList(new [] {"Cell", "Home", "Work"}),"--Phone Type--")
+                @Html.DropDownList("PhoneType", new SelectList(new [] {"Cell", "Home", "Work"}), "--Select--")
                 @Html.ValidationMessageFor(model => model.PhoneType)
             </div>
         </div>

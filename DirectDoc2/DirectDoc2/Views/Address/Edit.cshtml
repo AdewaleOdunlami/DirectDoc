@@ -18,7 +18,7 @@
         @Html.HiddenFor(model => model.PostalAddressID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PersonID, "PersonID", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PersonID, "Main member", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("PersonID", String.Empty)
                 @Html.ValidationMessageFor(model => model.PersonID)

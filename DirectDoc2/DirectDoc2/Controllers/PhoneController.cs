@@ -11,7 +11,6 @@ using DirectDoc2.DAL;
 
 namespace DirectDoc2.Controllers
 {
-    [Authorize]
     public class PhoneController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -41,11 +40,11 @@ namespace DirectDoc2.Controllers
         // GET: /Phone/Create
         public ActionResult Create()
         {
-            var sponsors = from c in db.Clients
-                           where c.Dependant == false
-                           select c;
+            var sponsor = from s in db.Clients
+                          where s.Dependant == false
+                          select s;
 
-            ViewBag.PersonID = new SelectList(sponsors, "ID", "FullName");
+            ViewBag.PersonID = new SelectList(sponsor, "ID", "FullName");
             return View();
         }
 
@@ -56,9 +55,9 @@ namespace DirectDoc2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="PhoneID,PersonID,PhoneType,AreaCode,Number")] Phone phone)
         {
-            var sponsors = from c in db.Clients
-                           where c.Dependant == false
-                           select c;
+            var sponsor = from s in db.Clients
+                          where s.Dependant == false
+                          select s;
 
             if (ModelState.IsValid)
             {
@@ -67,7 +66,7 @@ namespace DirectDoc2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PersonID = new SelectList(sponsors, "ID", "FullName", phone.PersonID);
+            ViewBag.PersonID = new SelectList(sponsor, "ID", "FullName", phone.PersonID);
             return View(phone);
         }
 
@@ -83,7 +82,7 @@ namespace DirectDoc2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title", phone.PersonID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", phone.PersonID);
             return View(phone);
         }
 
@@ -100,7 +99,7 @@ namespace DirectDoc2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title", phone.PersonID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", phone.PersonID);
             return View(phone);
         }
 

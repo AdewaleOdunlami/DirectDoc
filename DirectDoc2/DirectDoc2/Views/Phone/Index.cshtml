@@ -4,15 +4,16 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Client Contacts</h2>
+<h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Add number", "Create")
+    @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Person)
+            @*@Html.DisplayNameFor(model => model.Person.Title)*@
+            Main member
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PhoneType)

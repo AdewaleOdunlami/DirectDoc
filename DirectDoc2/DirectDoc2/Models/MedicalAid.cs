@@ -6,7 +6,7 @@ namespace DirectDoc2.Models
     {
         public int MedicalAidID { get; set; }
         [Required]
-        [Display(Name="Name")]
+        [Display(Name="Main member")]
         public int? PersonID { get; set; } 
         [Required]
         [Display(Name="Insurance Name")]
