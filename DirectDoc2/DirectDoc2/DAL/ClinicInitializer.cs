@@ -19,11 +19,9 @@ namespace DirectDoc2.DAL
                 new Tariff{TariffType="BHF/NA"}
             };
 
-
             tariff.ForEach(t => context.Tariffs.Add(t));
             context.SaveChanges();
-            
-           
+                      
             //base.Seed(context);
 
             var modality = new List<Modality>

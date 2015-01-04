@@ -15,16 +15,16 @@ namespace DirectDoc2.Models
         [Required]
         public string Title { get; set; }
         [Required]
-        [Display(Name="Firstname")]
-        [StringLength(500,MinimumLength=2,ErrorMessage="Field cannot be empty")]
+        [Display(Name = "Firstname")]
+        [StringLength(500, MinimumLength = 2, ErrorMessage = "Field cannot be empty")]
         public string FirstName { get; set; }
         public string Initials { get; set; }  
         [Required]
-        [Display(Name="Lastname")]
+        [Display(Name = "Lastname")]
         [StringLength(500, MinimumLength = 2, ErrorMessage = "Field cannot be empty")]
         public string LastName { get; set; }
         [DataType(DataType.Date)]
-        [Display(Name="Date of birth")]
+        [Display(Name = "Date of birth")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
         public bool Dependant { get; set; }
