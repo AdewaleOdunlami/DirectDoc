@@ -79,9 +79,16 @@
 
         <dd>
             @{
-                var insurance = from i in db.MedicalAids
+                //get matching mainmember id from Model MedicalAids
+                var insuranceOwner = from i in db.MedicalAids
                                 where i.PersonID == Model.ID
                                 select i;
+
+                var insuranceDetails = from i in db.MedicalAids
+                                       join j in db.Clients on
+                                       i.PersonID equals j.ID into mainMemberInsurance
+                                       from insured in mainMemberInsurance
+                                       select insured;
                                 
                 var insurance_tariff = from i in db.MedicalAids
                                         join t in db.Tariffs on
@@ -89,9 +96,9 @@
                                         from ins in insure
                                         select ins;
 
-                if (insurance.Any())
+                if (insuranceOwner.Any())
                 {
-                    foreach (var insure in insurance)
+                    foreach (var insure in insuranceOwner)
                     {
                         <text>Name:</text> @insure.NameOfAid <br />
                         <text>Policy Number:</text> @insure.PolicyNumber <br />

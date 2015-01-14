@@ -145,7 +145,8 @@ namespace DirectDoc2.Controllers
         }
 
         // GET: /Person/Delete/5
-        [HandleError(ExceptionType = typeof(System.Data.DataException), View = "DatabaseError")]
+        //[HandleError(ExceptionType = typeof(System.Data.DataException), View = "Error")]
+        [HandleError(ExceptionType = typeof(System.Data.DataException))]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -163,14 +164,22 @@ namespace DirectDoc2.Controllers
         }
 
         // POST: /Person/Delete/5
-        [HandleError(ExceptionType = typeof(System.Data.DataException), View = "DatabaseError")]
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [HandleError(ExceptionType = typeof(System.Data.DataException))]
         public ActionResult DeleteConfirmed(int id)
         {
-            Person person = db.Clients.Find(id);
+            try
+            {
+                Person person = db.Clients.Find(id);
                 db.Clients.Remove(person);
                 db.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                return View(ex.Message);
+            }
             
             return RedirectToAction("Index");
         }

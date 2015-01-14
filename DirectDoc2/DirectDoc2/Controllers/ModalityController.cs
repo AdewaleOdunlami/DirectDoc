@@ -12,6 +12,7 @@ using DirectDoc2.DAL;
 namespace DirectDoc2.Controllers
 {
     [Authorize]
+    [HandleError(ExceptionType = typeof(System.Data.DataException))]
     public class ModalityController : Controller
     {
         private ClinicContext db = new ClinicContext();
