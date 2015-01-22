@@ -29,6 +29,8 @@ namespace DirectDoc2.DAL
             modelBuilder.Configurations.Add(new ModalityConfiguration());
             modelBuilder.Configurations.Add(new PersonConfiguration());
         }
+
+        public System.Data.Entity.DbSet<DirectDoc2.Models.Consultation> Consultations { get; set; }
     }
 
     public class TariffConfiguration : EntityTypeConfiguration<Tariff>

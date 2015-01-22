@@ -15,6 +15,11 @@ namespace DirectDoc2.Models
         [StringLength(500,MinimumLength=2,ErrorMessage="Please enter the name of a city")]
         public string City { get; set; }
         public string Country { get; set; }
+        public string FullAddress 
+        {
+            get { return BoxNumber + " " + City + " " + Country;}
+            private set { ;}
+        }
 
         public Person Person { get; set; }
     }

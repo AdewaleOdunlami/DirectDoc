@@ -11,109 +11,116 @@ using DirectDoc2.DAL;
 
 namespace DirectDoc2.Controllers
 {
-    [Authorize]
-    [HandleError(ExceptionType = typeof(System.Data.DataException))]
-    public class InvoiceController : Controller
+    public class ConsultationController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
-        // GET: /Invoice/
+        // GET: /Consultation/
         public ActionResult Index()
         {
-            return View(db.Invoices.ToList());
+            var consultations = db.Consultations.Include(c => c.Modality).Include(c => c.Person);
+            return View(consultations.ToList());
         }
 
-        // GET: /Invoice/Details/5
+        // GET: /Consultation/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = db.Invoices.Find(id);
-            if (invoice == null)
+            Consultation consultation = db.Consultations.Find(id);
+            if (consultation == null)
             {
                 return HttpNotFound();
             }
-            return View(invoice);
+            return View(consultation);
         }
 
-        // GET: /Invoice/Create
+        // GET: /Consultation/Create
         public ActionResult Create()
         {
+            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "ModalityCode");
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName");
             return View();
         }
 
-        // POST: /Invoice/Create
+        // POST: /Consultation/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="InvoiceID,InvoiceNumber,InvoiceTo,FullNameOfPatient,InvoiceDate,InvoiceTime,TotalAmount")] Invoice invoice)
+        public ActionResult Create([Bind(Include="ConsultationID,PersonID,ConsultationDate,ConsultationTime,ModalityID,Description,Quantity,UnitPrice,SubTotal")] Consultation consultation)
         {
             if (ModelState.IsValid)
             {
-                db.Invoices.Add(invoice);
+                db.Consultations.Add(consultation);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(invoice);
+            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "ModalityCode", consultation.ModalityID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", consultation.PersonID);
+            return View(consultation);
         }
 
-        // GET: /Invoice/Edit/5
+        // GET: /Consultation/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = db.Invoices.Find(id);
-            if (invoice == null)
+            Consultation consultation = db.Consultations.Find(id);
+            if (consultation == null)
             {
                 return HttpNotFound();
             }
-            return View(invoice);
+            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "ModalityCode", consultation.ModalityID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", consultation.PersonID);
+            return View(consultation);
         }
 
-        // POST: /Invoice/Edit/5
+        // POST: /Consultation/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="InvoiceID,InvoiceNumber,InvoiceTo,FullNameOfPatient,InvoiceDate,InvoiceTime,TotalAmount")] Invoice invoice)
+        public ActionResult Edit([Bind(Include="ConsultationID,PersonID,ConsultationDate,ConsultationTime,ModalityID,Description,Quantity,UnitPrice,SubTotal")] Consultation consultation)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(invoice).State = EntityState.Modified;
+                db.Entry(consultation).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(invoice);
+            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "ModalityCode", consultation.ModalityID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", consultation.PersonID);
+            return View(consultation);
         }
 
-        // GET: /Invoice/Delete/5
+        // GET: /Consultation/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = db.Invoices.Find(id);
-            if (invoice == null)
+            Consultation consultation = db.Consultations.Find(id);
+            if (consultation == null)
             {
                 return HttpNotFound();
             }
-            return View(invoice);
+            return View(consultation);
         }
 
-        // POST: /Invoice/Delete/5
+        // POST: /Consultation/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Invoice invoice = db.Invoices.Find(id);
-            db.Invoices.Remove(invoice);
+            Consultation consultation = db.Consultations.Find(id);
+            db.Consultations.Remove(consultation);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -164,8 +164,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\ConsultationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\MedicalController.cs" />
     <Compile Include="Controllers\ModalityController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
@@ -177,6 +177,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Consultation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\MedicalAid.cs" />
@@ -253,11 +254,6 @@
     <Content Include="Views\Person\Details_old.cshtml" />
     <Content Include="Views\Person\Edit.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
-    <Content Include="Views\Invoice\Create.cshtml" />
-    <Content Include="Views\Invoice\Delete.cshtml" />
-    <Content Include="Views\Invoice\Details.cshtml" />
-    <Content Include="Views\Invoice\Edit.cshtml" />
-    <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\DatabaseError.cshtml" />
     <Content Include="Views\Address\Create.cshtml" />
     <Content Include="Views\Address\Delete.cshtml" />
@@ -275,6 +271,11 @@
     <Content Include="Views\Medical\Details.cshtml" />
     <Content Include="Views\Medical\Edit.cshtml" />
     <Content Include="Views\Medical\Index.cshtml" />
+    <Content Include="Views\Consultation\Create.cshtml" />
+    <Content Include="Views\Consultation\Delete.cshtml" />
+    <Content Include="Views\Consultation\Details.cshtml" />
+    <Content Include="Views\Consultation\Edit.cshtml" />
+    <Content Include="Views\Consultation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
