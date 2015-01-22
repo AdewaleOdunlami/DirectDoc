@@ -1,0 +1,90 @@
+﻿@model DirectDoc2.Models.Invoice
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Invoice</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoiceTo.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvoiceTo.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patient.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patient.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoiceNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvoiceNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoiceDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvoiceDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PatientBirthDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PatientBirthDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InsuranceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InsuranceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PolicyNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PolicyNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.InvoiceID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

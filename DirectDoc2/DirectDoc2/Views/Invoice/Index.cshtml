@@ -1,0 +1,81 @@
+﻿@model IEnumerable<DirectDoc2.Models.Invoice>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceTo.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patient.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientBirthDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InsuranceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PolicyNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceTo.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patient.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientBirthDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InsuranceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PolicyNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.InvoiceID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.InvoiceID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.InvoiceID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -11,208 +11,183 @@ namespace DirectDoc2.Models
     public class Invoice
     {
         ClinicContext db = new ClinicContext();
-        private decimal grandTotal;
-        private string insuranceName;
-        private string policyNumber;
-        private string mainMemberName;
-        private string mainMemberAddress;
-        private string patientName;
-        private string patientBirthDate;
+
+        private decimal? grandTotal;
+        private int invoiceNumber;
 
         public int InvoiceID { get; set; }
-        public int? PersonID { get; set; }
         //invoice number and date
-        int invoiceNumber = 5936;
         [Display(Name = "Invoice Number")]
-        public int? InvoiceNumber 
+        public int? InvoiceNumber
         {
-            get 
+            get
             {
                 ++invoiceNumber;
                 return invoiceNumber;
             }
-            private set{ }
+            private set { }
         }
         [DataType(DataType.DateTime)]
         [Display(Name = "Invoice Date")]
-        public DateTime InvoiceDate 
-        { 
-            get {return DateTime.Now;}
-            private set { value = DateTime.Now; } 
-        }
-
-        //insurance name and policy number
-        [Display(Name="Insurance Name")]
-        public string NameOfAid 
+        public DateTime InvoiceDate
         {
-
-            get
-            {
-                var isMainMember = from patient in db.Clients
-                                   where patient.ID == PersonID && patient.SponsorID == null
-                                   select patient;
-
-                var insuranceName = from person in db.MedicalAids
-                                    join mainmember in isMainMember on person.PersonID equals mainmember.ID
-                                    select person;
-
-                //retrieve mainmember's fullname 
-                if (insuranceName.Any())
-                {
-                    foreach (var person in insuranceName)
-                    {
-                        this.insuranceName = Convert.ToString(person.NameOfAid);
-                    }
-                }
-            //    var insuranceName = from medicalaid in db.MedicalAids
-            //                    join person in db.Clients on medicalaid.PersonID equals person.SponsorID into personmatch
-            //                    from insurancerecord in personmatch
-            //                    select new { medicalaid.NameOfAid };
-                          
-            //    this.insuranceName = Convert.ToString(insuranceName);
-            return this.insuranceName;
-            }//set;
+            get { return DateTime.Now; }
+            private set { value = DateTime.Now; }
         }
 
-        //[Display(Name="Policy Number")]
-        //public string PolicyNumber 
-        //{
-        //    //get
-        //    //{
-        //    //    var policyNumber = from medicalaid in db.MedicalAids
-        //    //                    join person in db.Clients on medicalaid.PersonID equals person.SponsorID into personmatch
-        //    //                    from insurancerecord in personmatch
-        //    //                    select new { medicalaid.PolicyNumber };
+        public int? PatientID { get; set; }
 
-        //    //    this.policyNumber = Convert.ToString(policyNumber);
-        //    //    return this.policyNumber;
-        //    //}//set; 
-        //}
+        [Display(Name = "Patient's D.O.B")]
+        public DateTime PatientBirthDate
+        {
+            get;
+            set;
+            //{
+            //    //retrieve details of patient
+            //    var patientDetails = from person in db.Clients
+            //                         where person.ID == PersonID
+            //                         select person;
 
-        ////invoice to: main member name and address
-        //[Display(Name="Main Member")]
-        //public string FullNameOfMainMember 
-        //{
-        //    get
-        //    {
-        //        //retrieve details of mainmember
-        //        var isMainMember = from patient in db.Clients
-        //                            where patient.ID == PersonID && patient.SponsorID == null
-        //                            select patient;
+            //    if (patientDetails.Any())
+            //    {
+            //        foreach (var p in patientDetails)
+            //        {
+            //            this.patientBirthDate = Convert.ToString(p.DateOfBirth);
+            //        }
+            //    }
+            //    return this.patientBirthDate;
+            //}
+            //private set { ;}
+        }
 
-        //        //retrieve mainmember's fullname 
-        //        if(isMainMember.Any())
-        //        {
-        //            foreach(var person in isMainMember)
-        //            {
-        //                this.mainMemberName = Convert.ToString(person.FullName);
-        //            } 
-        //        }
-        //        //retrieve dependant's fullname
-        //        else
-        //        {
-        //            var isDependant = from mainmember in isMainMember
-        //                               join dependant in db.Clients
-        //                                  on mainmember.ID equals dependant.SponsorID into sponsordetails
-        //                              from sd in sponsordetails
-        //                              select mainmember;
+        //invoice to main member
+        public int? InvoiceToID { get; set; }
+        //insurance name and policy number
+        [Display(Name = "Insurance Name")]
+        public string InsuranceName
+        {
+            get;
+            set;
+            //{
+            //    //determine membership status
+            //    var isMainMember = from patient in db.Clients
+            //                       where patient.ID == PersonID && patient.SponsorID == null
+            //                       select patient;
 
-        //            if(isDependant.Any())
-        //            {
-        //                foreach(var person in isDependant)
-        //                {
-        //                    this.mainMemberName = Convert.ToString(person.FullName);
-        //                }   
-        //            }   
-        //        }
+            //    var insuranceDetails = from person in db.MedicalAids
+            //                        join mainmember in isMainMember on person.PersonID equals mainmember.ID
+            //                        select person;
 
-        //        return this.mainMemberName;
-        //    }//set; 
-        //}
+            //    //retrieve mainmember's fullname 
+            //    if (insuranceDetails.Any())
+            //    {
+            //        foreach (var person in insuranceDetails)
+            //        {
+            //            this.insuranceName = Convert.ToString(person.NameOfAid);
+            //        }
+            //    }
+            //return this.insuranceName;
+            //}
+            //private set { ;}
+        }
 
-        //[Display(Name = "Postal Address")]
-        //public string Address 
-        //{
-        //    get
-        //    {
-        //        //retrieve details of mainmember
-        //        var isMainMember = from patient in db.PostalAddresses
-        //                           where patient.PersonID == PersonID
-        //                           select patient;
+        [Display(Name = "Policy Number")]
+        public string PolicyNumber
+        {
+            get;
+            set;
+            //{
+            //    //determine membership status
+            //    var isMainMember = from patient in db.Clients
+            //                       where patient.ID == PersonID && patient.SponsorID == null
+            //                       select patient;
 
-        //        //retrieve mainmember's fullname 
-        //        if (isMainMember.Any())
-        //        {
-        //            foreach (var person in isMainMember)
-        //            {
-        //                this.mainMemberName = Convert.ToString(person.FullAddress) ;
-        //            }
-        //        }
-        //        //retrieve dependant's fullname
-        //        else
-        //        {
-        //            var isDependant = from mainmember in isMainMember
-        //                              join dependant in db.Clients
-        //                                 on mainmember.ID equals dependant.SponsorID into sponsordetails
-        //                              from sd in sponsordetails
-        //                              select mainmember;
+            //    var insuranceDetails = from person in db.MedicalAids
+            //                           join mainmember in isMainMember on person.PersonID equals mainmember.ID
+            //                           select person;
 
-        //            if (isDependant.Any())
-        //            {
-        //                foreach (var person in isDependant)
-        //                {
-        //                    this.mainMemberName = Convert.ToString(person.FullName);
-        //                }
-        //            }
-        //        }
+            //    //retrieve mainmember's fullname 
+            //    if (insuranceDetails.Any())
+            //    {
+            //        foreach (var person in insuranceDetails)
+            //        {
+            //            this.policyNumber = Convert.ToString(person.PolicyNumber);
+            //        }
+            //    }
+            //    return this.policyNumber;
+            //}
+            //private set { ;}
+        }
 
-        //        return this.mainMemberName;
-        //    }//set; 
-        //}
+        [Display(Name = "Address")]
+        public string Address
+        {
+            get;
+            set;
+            //{
+            //    //retrieve details of mainmember
+            //    var isMainMember = from patient in db.Clients
+            //                       where patient.ID == PersonID && patient.SponsorID == null
+            //                       select patient;
 
-        ////patient name and birthdate
-        //[Display(Name = "Name of Patient")]
-        //public string FullNameOfPatient 
-        //{
-        //    get
-        //    {
-        //        //retrieve details of patient
-        //        var patientDetails = from patient in db.Clients
-        //                             where patient.ID == PersonID
-        //                             select patient.FullName;
+            //    //retrieve address of mainmember
+            //    var address = from patient in db.PostalAddresses
+            //                  join person in isMainMember 
+            //                    on patient.PersonID equals person.ID into addressdetails
+            //                  from ad in addressdetails
+            //                    select patient;
 
-        //        //retrieve name of main member if any
-        //        var hasMainMember = from person in db.Clients
-        //                            join mainmember in patientDetails on person.ID equals mainmember.SponsorID into sponsordetails
-        //                            from sd in sponsordetails
-        //                            select new { person.FullName };
+            //    if (address.Any())
+            //    {
+            //        foreach (var person in address)
+            //        {
+            //            this.mainMemberAddress = Convert.ToString(person.FullAddress);
+            //        }
+            //    }
+            //    //retrieve dependant's mainmember
+            //    else
+            //    {
+            //        var isDependant = from patient in db.Clients
+            //                           where patient.ID == PersonID && patient.SponsorID != null
+            //                           select patient;
 
-        //        this.mainMember = Convert.ToString(hasMainMember);
-        //        return this.mainMember;
-        //    }//set; 
-        //}
-        //[Display(Name = "Patient's D.O.B")]
-        //public DateTime PatientBirthDate 
-        //{
-        //    get { return db.Clients.;}
-        //    set; 
-        //}
+            //        //retrieve address of mainmember
+            //        var _address = from patient in db.PostalAddresses
+            //                      join person in isDependant
+            //                        on patient.PersonID equals person.SponsorID into addressdetails
+            //                      from ad in addressdetails
+            //                      select patient;
 
+            //        if (_address.Any())
+            //        {
+            //            foreach (var person in _address)
+            //            {
+            //                this.mainMemberAddress = Convert.ToString(person.FullAddress);
+            //            }
+            //        }
+            //    }
 
+            //    return this.mainMemberAddress;
+            //}
+            //private set { ;}
+        }
 
-        public decimal Total
+        
+
+        public decimal? Total
         {
             get
             {
                 foreach(Consultation consultation in db.Consultations)
                 {
-                    grandTotal += Convert.ToDecimal(consultation.SubTotal);
+                    grandTotal += consultation.SubTotal;
                 }
                 return grandTotal;
             }
-            //set;
+            private set { ;}
         }
 
-        public Person Person { get; set; }
+        public Person Patient { get; set; }
+        public Person InvoiceTo { get; set; }
     }
 }

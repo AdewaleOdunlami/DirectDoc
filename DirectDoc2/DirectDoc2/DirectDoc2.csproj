@@ -166,6 +166,7 @@
     <Compile Include="Controllers\AddressController.cs" />
     <Compile Include="Controllers\ConsultationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\MedicalController.cs" />
     <Compile Include="Controllers\ModalityController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
@@ -276,6 +277,11 @@
     <Content Include="Views\Consultation\Details.cshtml" />
     <Content Include="Views\Consultation\Edit.cshtml" />
     <Content Include="Views\Consultation\Index.cshtml" />
+    <Content Include="Views\Invoice\Create.cshtml" />
+    <Content Include="Views\Invoice\Delete.cshtml" />
+    <Content Include="Views\Invoice\Details.cshtml" />
+    <Content Include="Views\Invoice\Edit.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
