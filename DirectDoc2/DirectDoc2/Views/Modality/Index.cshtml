@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Modalities</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -13,6 +13,9 @@
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Tariff.TariffType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NappiCode)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ModalityCode)
@@ -30,6 +33,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Tariff.TariffType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NappiCode)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ModalityCode)

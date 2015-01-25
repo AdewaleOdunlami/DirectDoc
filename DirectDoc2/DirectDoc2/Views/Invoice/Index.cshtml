@@ -12,10 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.InvoiceTo.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Patient.Title)
+            @Html.DisplayNameFor(model => model.Person.Title)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.InvoiceNumber)
@@ -23,31 +20,16 @@
         <th>
             @Html.DisplayNameFor(model => model.InvoiceDate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PatientBirthDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.InsuranceName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PolicyNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Total)
-        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.NameOfAid)
+        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.InvoiceTo.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Patient.Title)
+            @Html.DisplayFor(modelItem => item.Person.Title)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.InvoiceNumber)
@@ -55,21 +37,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.InvoiceDate)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PatientBirthDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InsuranceName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PolicyNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Total)
-        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.NameOfAid)
+        </td>*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.InvoiceID }) |
             @Html.ActionLink("Details", "Details", new { id=item.InvoiceID }) |

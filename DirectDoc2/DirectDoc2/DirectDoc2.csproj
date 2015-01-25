@@ -245,11 +245,6 @@
     <Content Include="Views\Tariff\Details.cshtml" />
     <Content Include="Views\Tariff\Edit.cshtml" />
     <Content Include="Views\Tariff\Index.cshtml" />
-    <Content Include="Views\Modality\Create.cshtml" />
-    <Content Include="Views\Modality\Delete.cshtml" />
-    <Content Include="Views\Modality\Details.cshtml" />
-    <Content Include="Views\Modality\Edit.cshtml" />
-    <Content Include="Views\Modality\Index.cshtml" />
     <Content Include="Views\Person\Create.cshtml" />
     <Content Include="Views\Person\Delete.cshtml" />
     <Content Include="Views\Person\Details_old.cshtml" />
@@ -282,6 +277,11 @@
     <Content Include="Views\Invoice\Details.cshtml" />
     <Content Include="Views\Invoice\Edit.cshtml" />
     <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Modality\Create.cshtml" />
+    <Content Include="Views\Modality\Delete.cshtml" />
+    <Content Include="Views\Modality\Details.cshtml" />
+    <Content Include="Views\Modality\Edit.cshtml" />
+    <Content Include="Views\Modality\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

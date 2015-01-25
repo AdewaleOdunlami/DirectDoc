@@ -1,4 +1,5 @@
 ﻿@model DirectDoc2.Models.Invoice
+@using DirectDoc2.DAL
 
 @{
     ViewBag.Title = "Details";
@@ -11,19 +12,24 @@
 	<hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.InvoiceTo.Title)
+            @*@Html.DisplayNameFor(model => model.Person.Title)*@
+            Patient
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.InvoiceTo.Title)
-        </dd>
+            @*@Html.DisplayFor(model => model.Person.FullName)*@
+            @{
+                ClinicContext db = new ClinicContext();
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Patient.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Patient.Title)
+                var patient = from person in db.Clients
+                              where person.ID == Model.PersonID
+                              select person;
+                              
+                foreach(var person in patient)
+                {
+                    @person.FullName;
+                }       
+            }
         </dd>
 
         <dt>
@@ -43,19 +49,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PatientBirthDate)
+            @Html.DisplayNameFor(model => model.InvoiceTo)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PatientBirthDate)
+            @Html.DisplayFor(model => model.InvoiceTo)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.InsuranceName)
+            @Html.DisplayNameFor(model => model.NameOfAid)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.InsuranceName)
+            @Html.DisplayFor(model => model.NameOfAid)
         </dd>
 
         <dt>
@@ -64,22 +70,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.PolicyNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Total)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Total)
         </dd>
 
     </dl>

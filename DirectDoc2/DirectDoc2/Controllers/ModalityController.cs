@@ -11,8 +11,6 @@ using DirectDoc2.DAL;
 
 namespace DirectDoc2.Controllers
 {
-    [Authorize]
-    [HandleError(ExceptionType = typeof(System.Data.DataException))]
     public class ModalityController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -51,7 +49,7 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ModalityID,TariffID,ModalityCode,Description,Price")] Modality modality)
+        public ActionResult Create([Bind(Include="ModalityID,TariffID,NappiCode,ModalityCode,Description,Price")] Modality modality)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +83,7 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ModalityID,TariffID,ModalityCode,Description,Price")] Modality modality)
+        public ActionResult Edit([Bind(Include="ModalityID,TariffID,NappiCode,ModalityCode,Description,Price")] Modality modality)
         {
             if (ModelState.IsValid)
             {

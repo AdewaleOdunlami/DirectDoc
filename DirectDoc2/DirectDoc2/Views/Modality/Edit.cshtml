@@ -1,7 +1,7 @@
 ﻿@model DirectDoc2.Models.Modality
 
 @{
-    ViewBag.Title = "Edit Modality";
+    ViewBag.Title = "Edit";
 }
 
 <h2>Edit</h2>
@@ -18,10 +18,18 @@
         @Html.HiddenFor(model => model.ModalityID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TariffID, "Tariff", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TariffID, "TariffID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("TariffID", String.Empty)
                 @Html.ValidationMessageFor(model => model.TariffID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NappiCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NappiCode)
+                @Html.ValidationMessageFor(model => model.NappiCode)
             </div>
         </div>
 

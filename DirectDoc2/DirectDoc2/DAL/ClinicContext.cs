@@ -46,7 +46,8 @@ namespace DirectDoc2.DAL
         public ModalityConfiguration()
         {
             Property(m => m.TariffID).IsRequired();
-            
+
+            Property(m => m.NappiCode).IsRequired().HasMaxLength(500);
             Property(m => m.ModalityCode).IsRequired().HasMaxLength(500);
             Property(m => m.Description).IsRequired().HasMaxLength(500);
             Property(m => m.Price).IsRequired().HasColumnType("money");
