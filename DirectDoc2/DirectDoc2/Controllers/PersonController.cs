@@ -1,55 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DirectDoc2.Models;
 using DirectDoc2.DAL;
-using System.Collections;
+using DirectDoc2.ViewModels;
 
 namespace DirectDoc2.Controllers
 {
-    [Authorize]
     public class PersonController : Controller
     {
-        private ClinicContext db = new ClinicContext(); 
-        
+        private ClinicContext db = new ClinicContext();
+
         // GET: /Person/
-        public ActionResult Index(string sortOrder, string searchText)
+        public ActionResult Index(int? id, int? phoneID, int? addressID)
         {
-            ViewBag.FirstNameSortParm = String.IsNullOrEmpty(sortOrder) ? "first_name_desc" : "";
-            ViewBag.LastNameSortParm = String.IsNullOrEmpty(sortOrder) ? "last_name_desc" : "";
-            //ViewBag.SponsorSortParm = String.IsNullOrEmpty(sortOrder) ? "sponsor_name_desc" : "";
+            var viewModel = new PatientData();
 
-            var clients = from c in db.Clients
-                          select c;
+            //var clients = db.Clients.Include(p => p.Sponsor)
+            viewModel.Patients = db.Clients
+                                    .Include(p => p.PhoneNumbers)
+                                    .Include(p => p.PostalAddresses)
+                                    //.Include(p => p.Dependants.Select(d => d.SponsorID == p.ID))
+                                    //.Include(p => p.Consultations)
+                                    .OrderBy(p => p.LastName);
 
-            if (!String.IsNullOrEmpty(searchText))
+            if(id != null)
             {
-                clients = clients.Where(c => c.LastName.Contains(searchText)
-                                || c.FirstName.Contains(searchText));
+                ViewBag.PatientID = id.Value;
+                viewModel.PhoneNumbers = viewModel.Patients.Where(
+                    p => p.ID == id.Value).Single().PhoneNumbers;
             }
 
-            switch (sortOrder)
-            {
-                case "first_name_desc":
-                    clients = clients.OrderByDescending(s => s.FirstName);
-                    break;
-                case "last_name_desc":
-                    clients = clients.OrderByDescending(s => s.LastName);
-                    break;
-                //case "sponsor_name_desc":
-                //    clients = clients.OrderByDescending(s => s.Sponsor);
-                //    break;
-                default:
-                    clients = clients.OrderBy(s => s.LastName);
-                    break;
-            }
-            //var clients = db.Clients.Include(p => p.Sponsor);
-            return View(clients.ToList());
+            //if (addressID != null)
+            //{
+            //    ViewBag.AddressID = addressID.Value;
+            //    viewModel.PhoneNumbers = viewModel.Patients.Where(
+            //        p => p.ID == id.Value).Single().PhoneNumbers;
+            //}
+
+            return View(viewModel);
+            //return View(clients.ToList());
         }
 
         // GET: /Person/Details/5
@@ -70,13 +61,11 @@ namespace DirectDoc2.Controllers
         // GET: /Person/Create
         public ActionResult Create()
         {
-            var sponsors = from d in db.Clients
-                           where d.Dependant == false
-                           select d;
+            var mainMember = from mainmember in db.Clients
+                             where mainmember.IsDependant == false
+                             select mainmember;
 
-            //ViewBag.SponsorID = new SelectList(db.Clients, "ID", "FullName");
-            ViewBag.SponsorID = new SelectList(sponsors,"ID","FullName");
-
+            ViewBag.SponsorID = new SelectList(mainMember, "ID", "FullName");
             return View();
         }
 
@@ -85,12 +74,8 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant")] Person person)
+        public ActionResult Create([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,IsDependant")] Person person)
         {
-            var sponsors = from d in db.Clients
-                            where d.Dependant == false
-                            select d;
-
             if (ModelState.IsValid)
             {
                 db.Clients.Add(person);
@@ -98,18 +83,17 @@ namespace DirectDoc2.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.SponsorID = new SelectList(db.Clients, "ID", "FullName", person.ID);
-            ViewBag.SponsorID = new SelectList(sponsors,"ID","FullName", person.ID);
+            var mainMember = from mainmember in db.Clients
+                             where mainmember.IsDependant == false
+                             select mainmember;
+
+            ViewBag.SponsorID = new SelectList(mainMember, "ID", "FullName", person.SponsorID);
             return View(person);
         }
 
         // GET: /Person/Edit/5
         public ActionResult Edit(int? id)
         {
-            var sponsors = from d in db.Clients
-                           where d.Dependant == false && d.ID != id
-                           select d;
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -119,7 +103,12 @@ namespace DirectDoc2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.SponsorID = new SelectList(sponsors, "ID", "FullName", person.SponsorID);
+
+            var mainMember = from mainmember in db.Clients
+                             where mainmember.IsDependant == false && mainmember.ID != id
+                             select mainmember;
+
+            ViewBag.SponsorID = new SelectList(mainMember, "ID", "FullName", person.SponsorID);
             return View(person);
         }
 
@@ -128,25 +117,24 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,Dependant")] Person person)
+        public ActionResult Edit([Bind(Include="ID,SponsorID,Title,FirstName,Initials,LastName,DateOfBirth,IsDependant")] Person person)
         {
-            var sponsors = from d in db.Clients
-                           where d.Dependant == false && d.ID != person.ID
-                           select d;
-
             if (ModelState.IsValid)
             {
                 db.Entry(person).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.SponsorID = new SelectList(sponsors, "ID", "FullName", person.SponsorID);
+
+            var mainMember = from mainmember in db.Clients
+                             where mainmember.IsDependant == false && mainmember.ID != person.ID
+                             select mainmember;
+
+            ViewBag.SponsorID = new SelectList(mainMember, "ID", "FullName", person.SponsorID);
             return View(person);
         }
 
         // GET: /Person/Delete/5
-        //[HandleError(ExceptionType = typeof(System.Data.DataException), View = "Error")]
-        [HandleError(ExceptionType = typeof(System.Data.DataException))]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -154,33 +142,21 @@ namespace DirectDoc2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Person person = db.Clients.Find(id);
-
             if (person == null)
             {
                 return HttpNotFound();
             }
-
             return View(person);
         }
 
         // POST: /Person/Delete/5
-        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [HandleError(ExceptionType = typeof(System.Data.DataException))]
         public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                Person person = db.Clients.Find(id);
-                db.Clients.Remove(person);
-                db.SaveChanges();
-            }
-            catch(Exception ex)
-            {
-                return View(ex.Message);
-            }
-            
+            Person person = db.Clients.Find(id);
+            db.Clients.Remove(person);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 

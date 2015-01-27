@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace DirectDoc2.Models
@@ -21,6 +22,8 @@ namespace DirectDoc2.Models
             private set { ;}
         }
 
-        public Person Person { get; set; }
+        public virtual Person Person { get; set; }
+
+        public virtual ICollection<Person> People { get; set; }
     }
 }

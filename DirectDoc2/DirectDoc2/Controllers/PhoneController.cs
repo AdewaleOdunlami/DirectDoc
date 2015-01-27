@@ -43,7 +43,7 @@ namespace DirectDoc2.Controllers
         public ActionResult Create()
         {
             var sponsor = from s in db.Clients
-                          where s.Dependant == false
+                          where s.IsDependant == false
                           select s;
 
             ViewBag.PersonID = new SelectList(sponsor, "ID", "FullName");
@@ -58,7 +58,7 @@ namespace DirectDoc2.Controllers
         public ActionResult Create([Bind(Include="PhoneID,PersonID,PhoneType,AreaCode,Number")] Phone phone)
         {
             var sponsor = from s in db.Clients
-                          where s.Dependant == false
+                          where s.IsDependant == false
                           select s;
 
             if (ModelState.IsValid)

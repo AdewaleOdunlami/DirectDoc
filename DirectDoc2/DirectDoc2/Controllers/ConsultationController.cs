@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using DirectDoc2.Models;
 using DirectDoc2.DAL;
-using System.Collections;
 
 namespace DirectDoc2.Controllers
 {
@@ -41,8 +40,8 @@ namespace DirectDoc2.Controllers
         // GET: /Consultation/Create
         public ActionResult Create()
         {
-            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "CodeDescription");
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName");
+            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "NappiCode");
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title");
             return View();
         }
 
@@ -51,7 +50,7 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ConsultationID,PersonID,ConsultationDate,ConsultationTime,ModalityID,Description,Quantity,SubTotal")] Consultation consultation)
+        public ActionResult Create([Bind(Include="ConsultationID,PersonID,ConsultationDate,ConsultationTime,ModalityID,Quantity,ModalityDescription,UnitPrice,SubTotal")] Consultation consultation)
         {
             if (ModelState.IsValid)
             {
@@ -60,8 +59,8 @@ namespace DirectDoc2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "CodeDescription", consultation.ModalityID);
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", consultation.PersonID);
+            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "NappiCode", consultation.ModalityID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title", consultation.PersonID);
             return View(consultation);
         }
 
@@ -77,8 +76,8 @@ namespace DirectDoc2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "ModalityCode", consultation.ModalityID);
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", consultation.PersonID);
+            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "NappiCode", consultation.ModalityID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title", consultation.PersonID);
             return View(consultation);
         }
 
@@ -87,7 +86,7 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ConsultationID,PersonID,ConsultationDate,ConsultationTime,ModalityID,Description,Quantity,SubTotal")] Consultation consultation)
+        public ActionResult Edit([Bind(Include="ConsultationID,PersonID,ConsultationDate,ConsultationTime,ModalityID,Quantity,ModalityDescription,UnitPrice,SubTotal")] Consultation consultation)
         {
             if (ModelState.IsValid)
             {
@@ -95,8 +94,8 @@ namespace DirectDoc2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "ModalityCode", consultation.ModalityID);
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", consultation.PersonID);
+            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "NappiCode", consultation.ModalityID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title", consultation.PersonID);
             return View(consultation);
         }
 

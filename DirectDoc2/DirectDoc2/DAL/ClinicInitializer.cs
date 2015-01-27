@@ -13,83 +13,83 @@ namespace DirectDoc2.DAL
     {
         protected override void Seed(ClinicContext context)
         {
-            //    context.Tariffs.AddOrUpdate(
-            //        t => t.ID,
-            //        new Tariff { TariffType = "SAMA" },
-            //        new Tariff { TariffType = "GRN" },
-            //        new Tariff { TariffType = "BHF/NA" }
-            //    );
-            //    //context.SaveChanges();
+                context.Tariffs.AddOrUpdate(
+                    t => t.ID,
+                    new Tariff { TariffType = "SAMA" },
+                    new Tariff { TariffType = "GRN" },
+                    new Tariff { TariffType = "BHF/NA" }
+                );
+                //context.SaveChanges();
 
-            //    context.Modalities.AddOrUpdate(
-            //        m => m.ModalityID,
-            //        new Modality { ModalityCode = "0201", Description = "Cost 5ml Syringe", Price = 3.94M, TariffID = 1, NappiCode = "491919-003" },
-            //        new Modality { ModalityCode = "0201", Description = "Cost 5ml Syringe", Price = 2.52M, TariffID = 2, NappiCode = "491919-003" },
-            //        new Modality { ModalityCode = "0201", Description = "Cost 5ml Syringe", Price = 2.52M, TariffID = 3, NappiCode = "491919-003" }
-            //        );
-            //    //context.SaveChanges();
+                context.Modalities.AddOrUpdate(
+                    m => m.ModalityID,
+                    new Modality { ModalityCode = "0201", Description = "Cost 5ml Syringe", Price = 3.94M, TariffID = 1, NappiCode = "491919-003" },
+                    new Modality { ModalityCode = "0201", Description = "Cost 5ml Syringe", Price = 2.52M, TariffID = 2, NappiCode = "491919-003" },
+                    new Modality { ModalityCode = "0201", Description = "Cost 5ml Syringe", Price = 2.52M, TariffID = 3, NappiCode = "491919-003" }
+                    );
+                //context.SaveChanges();
 
-            //    context.Clients.AddOrUpdate(
-            //        c => c.ID,
-            //        new Person{
-            //            SponsorID = null,
-            //            Title = "Mr",
-            //            FirstName = "Adewale",
-            //            Initials = "",
-            //            LastName = "Odunlami",
-            //            DateOfBirth = Convert.ToDateTime("15-Jan-1986"),
-            //            Dependant = false
-            //        },
+                context.Clients.AddOrUpdate(
+                    c => c.ID,
+                    new Person{
+                        SponsorID = null,
+                        Title = "Mr",
+                        FirstName = "Adewale",
+                        Initials = "",
+                        LastName = "Odunlami",
+                        DateOfBirth = Convert.ToDateTime("15-Jan-1986"),
+                        IsDependant = false
+                    },
 
-            //        new Person
-            //        {
-            //            SponsorID = 1,
-            //            Title = "Mr",
-            //            FirstName = "Oreoluwa",
-            //            Initials = "O.",
-            //            LastName = "Odunlami",
-            //            DateOfBirth = Convert.ToDateTime("15-Jan-1986"),
-            //            Dependant = true
-            //        }
-            //    );
-            //    context.SaveChanges();
+                    new Person
+                    {
+                        SponsorID = 1,
+                        Title = "Mr",
+                        FirstName = "Oreoluwa",
+                        Initials = "O.",
+                        LastName = "Odunlami",
+                        DateOfBirth = Convert.ToDateTime("15-Jan-1986"),
+                        IsDependant = true
+                    }
+                );
+                context.SaveChanges();
 
-            //}
-            var tariff = new List<Tariff>
-            {
-                new Tariff{TariffType="SAMA"},
-                new Tariff{TariffType="GRN"},
-                new Tariff{TariffType="BHF/NA"}
-            };
+            }
+            //var tariff = new List<Tariff>
+            //{
+            //    new Tariff{TariffType="SAMA"},
+            //    new Tariff{TariffType="GRN"},
+            //    new Tariff{TariffType="BHF/NA"}
+            //};
 
-            tariff.ForEach(t => context.Tariffs.Add(t));
-            context.SaveChanges();
+            //tariff.ForEach(t => context.Tariffs.Add(t));
+            //context.SaveChanges();
 
-            //base.Seed(context);
+            ////base.Seed(context);
 
 
-            var modality = new List<Modality>
-            {
-                new Modality{ModalityCode="0201", Description="Cost 5ml Syringe", Price=3.94M, TariffID=1, NappiCode="491919-003"},
-                new Modality{ModalityCode="0201", Description="Cost 5ml Syringe", Price=2.52M, TariffID=2, NappiCode="491919-003"}
-            };
+            //var modality = new List<Modality>
+            //{
+            //    new Modality{ModalityCode="0201", Description="Cost 5ml Syringe", Price=3.94M, TariffID=1, NappiCode="491919-003"},
+            //    new Modality{ModalityCode="0201", Description="Cost 5ml Syringe", Price=2.52M, TariffID=2, NappiCode="491919-003"}
+            //};
 
-            modality.ForEach(t => context.Modalities.Add(t));
-            context.SaveChanges();
+            //modality.ForEach(t => context.Modalities.Add(t));
+            //context.SaveChanges();
 
-            var client = new List<Person>
-            {
-                new Person{
-                    SponsorID = null, Title = "Mr", FirstName = "Adewale", Initials = "",
-                    LastName = "Odunlami", DateOfBirth = Convert.ToDateTime("15-Jan-1986"), Dependant = false},
+            //var client = new List<Person>
+            //{
+            //    new Person{
+            //        SponsorID = null, Title = "Mr", FirstName = "Adewale", Initials = "",
+            //        LastName = "Odunlami", DateOfBirth = Convert.ToDateTime("15-Jan-1986"), Dependant = false},
 
-                new Person{
-                    SponsorID = 1, Title = "Mr", FirstName = "Oreoluwa", Initials = "O.",
-                    LastName = "Odunlami", DateOfBirth = Convert.ToDateTime("15-Jan-1986"), Dependant = true}
-            };
+            //    new Person{
+            //        SponsorID = 1, Title = "Mr", FirstName = "Oreoluwa", Initials = "O.",
+            //        LastName = "Odunlami", DateOfBirth = Convert.ToDateTime("15-Jan-1986"), Dependant = true}
+            //};
 
-            client.ForEach(t => context.Clients.Add(t));
-            context.SaveChanges();
-        }
+            //client.ForEach(t => context.Clients.Add(t));
+            //context.SaveChanges();
+        //}
     }
 }

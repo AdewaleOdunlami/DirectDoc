@@ -18,6 +18,6 @@ namespace DirectDoc2.Models
         [Display(Name="Phone number")]
         public int? Number { get; set; }
 
-        public Person Person { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

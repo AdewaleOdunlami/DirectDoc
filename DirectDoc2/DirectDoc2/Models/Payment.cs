@@ -10,10 +10,12 @@ namespace DirectDoc2.Models
     {
         public int PaymentID { get; set; }
         public int PersonID { get; set; }
+        public int InvoiceID { get; set; }
         public DateTime PaymentDate { get; set; }
         public decimal Amount { get; set; }
-        public Invoice Invoice { get; set; }
-        public Person Person { get; set; }
+
+        public virtual Invoice Invoice { get; set; }
+        public virtual Person Person { get; set; }
     }
 
     public class CreditCard : Payment

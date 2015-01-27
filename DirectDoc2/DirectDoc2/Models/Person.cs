@@ -6,8 +6,6 @@ using System.Text;
 
 namespace DirectDoc2.Models
 {
-
-
     public class Person
     {
         public int ID { get; set; }
@@ -28,7 +26,8 @@ namespace DirectDoc2.Models
         [Display(Name = "Date of birth")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
-        public bool Dependant { get; set; }
+        [Display(Name="Is a Dependant")]
+        public bool IsDependant { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public string FullName 
         {
@@ -36,9 +35,11 @@ namespace DirectDoc2.Models
             private set { }
         }
 
-        public List<Phone> Contacts { get; set; }
-        
         public virtual Person Sponsor { get; set; }
-    }
 
+        public ICollection<Phone> PhoneNumbers { get; set; }
+        public virtual ICollection<PostalAddress> PostalAddresses { get; set; }
+        public virtual ICollection<Person> Dependants { get; set; }
+        public virtual ICollection<Consultation> Consultations { get; set; }
+    }
 }

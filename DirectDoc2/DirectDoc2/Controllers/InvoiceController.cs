@@ -41,7 +41,7 @@ namespace DirectDoc2.Controllers
         public ActionResult Create()
         {
             var mainmember = from person in db.Clients
-                             where person.Dependant == false
+                             where person.IsDependant == false
                              select person;
 
             ViewBag.PersonID = new SelectList(mainmember, "ID", "FullName");
@@ -63,7 +63,7 @@ namespace DirectDoc2.Controllers
             }
 
             var mainmember = from person in db.Clients
-                             where person.Dependant == false
+                             where person.IsDependant == false
                              select person;
 
             ViewBag.PersonID = new SelectList(mainmember, "ID", "FullName", invoice.PersonID);

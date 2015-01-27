@@ -220,8 +220,6 @@ namespace DirectDoc2.Models
         //    set; 
         //}
 
-
-
         public decimal Total
         {
             get
@@ -235,6 +233,7 @@ namespace DirectDoc2.Models
             //set;
         }
 
-        public Person Person { get; set; }
+        public virtual Person Person { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

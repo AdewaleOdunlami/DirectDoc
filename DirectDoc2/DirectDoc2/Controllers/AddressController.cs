@@ -11,17 +11,14 @@ using DirectDoc2.DAL;
 
 namespace DirectDoc2.Controllers
 {
-    [Authorize]
-    [HandleError(ExceptionType = typeof(System.Data.DataException))]
     public class AddressController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
         // GET: /Address/
-        public ActionResult Index(string sortOrder, string searchText)
+        public ActionResult Index()
         {
             var postaladdresses = db.PostalAddresses.Include(p => p.Person);
-            //var postaladdresses = postaladdress.Include(p => p.Person);
             return View(postaladdresses.ToList());
         }
 
@@ -32,25 +29,22 @@ namespace DirectDoc2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
             PostalAddress postaladdress = db.PostalAddresses.Find(id);
-            
             if (postaladdress == null)
             {
                 return HttpNotFound();
             }
-
             return View(postaladdress);
         }
 
         // GET: /Address/Create
         public ActionResult Create()
         {
-            var sponsors = from c in db.Clients
-                            where c.Dependant == false
-                            select c;
+            var mainMember = from person in db.Clients
+                             where person.IsDependant == false
+                             select person;
 
-            ViewBag.PersonID = new SelectList(sponsors, "ID", "FullName");
+            ViewBag.PersonID = new SelectList(mainMember, "ID", "FullName");
             return View();
         }
 
@@ -59,30 +53,25 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="PostalAddressID,PersonID,BoxNumber,City,Country")] PostalAddress postaladdress)
+        public ActionResult Create([Bind(Include="PostalAddressID,PersonID,BoxNumber,City")] PostalAddress postaladdress)
         {
-            var sponsors = from c in db.Clients
-                            where c.Dependant == false
-                            select c;
-
             if (ModelState.IsValid)
             {
                 db.PostalAddresses.Add(postaladdress);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            var mainMember = from person in db.Clients
+                             where person.IsDependant == false
+                             select person;
 
-            ViewBag.PersonID = new SelectList(sponsors, "ID", "FullName", postaladdress.PersonID);
+            ViewBag.PersonID = new SelectList(mainMember, "ID", "FullName", postaladdress.PersonID);
             return View(postaladdress);
         }
 
         // GET: /Address/Edit/5
         public ActionResult Edit(int? id)
         {
-            var sponsors = from d in db.Clients
-                           where d.Dependant == false
-                           select d;
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -92,7 +81,12 @@ namespace DirectDoc2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.PersonID = new SelectList(sponsors, "ID", "FullName", postaladdress.PersonID);
+
+            var mainMember = from person in db.Clients
+                             where person.IsDependant == false
+                             select person;
+
+            ViewBag.PersonID = new SelectList(mainMember, "ID", "FullName", postaladdress.PersonID);
             return View(postaladdress);
         }
 
@@ -101,19 +95,20 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="PostalAddressID,PersonID,BoxNumber,City,Country")] PostalAddress postaladdress)
+        public ActionResult Edit([Bind(Include="PostalAddressID,PersonID,BoxNumber,City")] PostalAddress postaladdress)
         {
-            var sponsors = from d in db.Clients
-                           where d.Dependant == false
-                           select d;
-
             if (ModelState.IsValid)
             {
                 db.Entry(postaladdress).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", postaladdress.PersonID);
+
+            var mainMember = from person in db.Clients
+                             where person.IsDependant == false
+                             select person;
+
+            ViewBag.PersonID = new SelectList(mainMember, "ID", "Title", postaladdress.PersonID);
             return View(postaladdress);
         }
 

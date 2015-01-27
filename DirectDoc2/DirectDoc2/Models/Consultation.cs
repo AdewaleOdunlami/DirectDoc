@@ -11,6 +11,7 @@ namespace DirectDoc2.Models
     {
         ClinicContext db = new ClinicContext();
         private decimal unitPrice;
+        private string modalityDescription;
 
         public int ConsultationID { get; set; }
         [Required]
@@ -27,13 +28,40 @@ namespace DirectDoc2.Models
         [DisplayFormat(DataFormatString="{0:t}", ApplyFormatInEditMode = true)]
         public DateTime ConsultationTime { get; set; }
         [Required]
-        [Display(Name = "Code")]
+        [Display(Name = "Modality Code")]
         public int? ModalityID { get; set; }
         [Required]
-        public string Description { get; set; }
-        [Required]
-        [Range(1,500)]
+        [Range(1, 500)]
         public int? Quantity { get; set; }
+        [Required]
+        public string ModalityDescription
+        {
+            //get;
+            //set;
+            get
+            {
+                return modalityDescription;
+            }
+            private set
+            {
+                var description = from modality in db.Modalities
+                                  where modality.ModalityID == ModalityID
+                                  select modality.Description;
+
+                if(description.Any())
+                {
+                    foreach(var d in description)
+                    {
+                        modalityDescription = d.ToString();
+                    }
+                }
+                else
+                {
+                    modalityDescription = "No description";
+                }
+            }
+        }
+
         [Required]
         [Display(Name = "Unit Price")]
         [DisplayFormat(DataFormatString= "{0:C}")]
@@ -47,7 +75,7 @@ namespace DirectDoc2.Models
             {
                 //determine if patient is a dependant
                 var isDependant = from person in db.Clients
-                                   where person.Dependant == true && person.ID == PersonID
+                                   where person.IsDependant == true && person.ID == PersonID
                                    select person;
 
                 if(isDependant.Any())

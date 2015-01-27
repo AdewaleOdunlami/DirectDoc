@@ -15,7 +15,7 @@ namespace DirectDoc2.Models
 
         public int ModalityID { get; set; }
         [Display(Name="Tariff")]
-        public int TariffID { get; set; }
+        public int? TariffID { get; set; }
         [Display(Name="Nappi Code")]
         public string NappiCode { get; set; }
         [Display(Name = "Code")]
@@ -29,14 +29,14 @@ namespace DirectDoc2.Models
                 var tariffName = from tariff in db.Tariffs
                                  join m in db.Modalities on tariff.ID equals m.TariffID into tariffdetails
                                  from td in tariffdetails
-                                 where tariff.ID == TariffID
+                                 where td.TariffID == TariffID
                                  select tariff.TariffType;
 
                 if(tariffName.Any())
                 {
                     foreach(var tariff in tariffName)
                     {
-                        names.Add(tariff);
+                        names[0] = tariff;
                     }
                 }
 

@@ -1,5 +1,6 @@
-﻿
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 namespace DirectDoc2.Models
 {
     public class MedicalAid
@@ -18,7 +19,9 @@ namespace DirectDoc2.Models
         [Display(Name="Tariff")]
         public int? TariffID { get; set; }
        
-        public Person Person { get; set; }
-        public Tariff Tariff { get; set; }
+        public virtual Person Person { get; set; }
+        public virtual Tariff Tariff { get; set; }
+
+        public virtual ICollection<Person> Subscribers { get; set; }
     }
 }

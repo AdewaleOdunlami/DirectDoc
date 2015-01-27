@@ -1,50 +1,42 @@
 ﻿@model IEnumerable<DirectDoc2.Models.Person>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "List of Patients";
 }
 
-<h2>Clients</h2>
+<h2>List of Patients</h2>
 
 <p>
-    @Html.ActionLink("New Client", "Create")
+    @Html.ActionLink("Add Patient", "Create")
 </p>
-
-@using (Html.BeginForm())
-{
-    <p>
-        Find by name: @Html.TextBox("SearchText")
-        <input type="submit" value="Search"/>
-    </p><br />
-}
-
-
 <table class="table">
     <tr>
         <th>
             @*@Html.DisplayNameFor(model => model.Sponsor)*@
-            Main member
+            Main Member
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.FirstName)*@
-            @Html.ActionLink("First name", "Index", new { sortOrder = ViewBag.FirstNameSortParm })
+            @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Initials)
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.LastName)*@
-            @Html.ActionLink("Last name", "Index", new { sortOrder = ViewBag.LastNameSortParam })
+            @Html.DisplayNameFor(model => model.LastName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateOfBirth)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Dependant)
+            @*@Html.DisplayNameFor(model => model.IsDependant)*@
+            Dependant
         </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>*@
         <th></th>
     </tr>
 
@@ -69,8 +61,11 @@
             @Html.DisplayFor(modelItem => item.DateOfBirth)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Dependant)
+            @Html.DisplayFor(modelItem => item.IsDependant)
         </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
