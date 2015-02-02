@@ -11,7 +11,8 @@ namespace DirectDoc2.Models
     public class Modality
     {
         ClinicContext db = new ClinicContext();
-        ArrayList names = new ArrayList();
+        List<String> names = new List<string>();
+        private string codeDescription;
 
         public int ModalityID { get; set; }
         [Display(Name="Tariff")]
@@ -25,24 +26,31 @@ namespace DirectDoc2.Models
         public string CodeDescription
         {
             get 
+            {    
+                return codeDescription;
+            }
+            private set 
             {
                 var tariffName = from tariff in db.Tariffs
                                  join m in db.Modalities on tariff.ID equals m.TariffID into tariffdetails
                                  from td in tariffdetails
-                                 where td.TariffID == TariffID
+                                 where td.TariffID == this.TariffID
                                  select tariff.TariffType;
 
-                if(tariffName.Any())
+                if (tariffName.Any())
                 {
-                    foreach(var tariff in tariffName)
+                    foreach (var tariff in tariffName)
                     {
-                        names[0] = tariff;
+                        names.Add(tariff);
                     }
                 }
+                else
+                {
+                    names.Add(" ");
+                }
 
-                return ModalityCode + " " + Description + " " + names[0];
+                codeDescription = ModalityCode + " " + Description + " " + names[0];
             }
-            private set { }
         }
 
         public virtual Tariff Tariff { get; set; }

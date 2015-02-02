@@ -1,14 +1,22 @@
-﻿@model IEnumerable<DirectDoc2.Models.Person>
+﻿@*@model IEnumerable<DirectDoc2.Models.Person>*@
+@model DirectDoc2.ViewModels.PatientData
 
 @{
-    ViewBag.Title = "List of Patients";
+    ViewBag.Title = "Patients";
 }
 
-<h2>List of Patients</h2>
+<h2>Patients</h2>
 
 <p>
     @Html.ActionLink("Add Patient", "Create")
 </p>
+
+@using (Html.BeginForm())
+{
+    <p>Find by name: @Html.TextBox("SearchText")
+        <input type="submit" value="Search" /></p>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -16,19 +24,26 @@
             Main Member
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @*@Html.DisplayNameFor(model => model.Title)*@
+            Title
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @*@Html.DisplayNameFor(model => model.FirstName)*@
+            @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParam })
+            @*First Name*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Initials)
+            @*@Html.DisplayNameFor(model => model.Initials)*@
+            Initials
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @*@Html.DisplayNameFor(model => model.LastName)*@
+            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParam })
+            @*Last Name*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
+            @*@Html.DisplayNameFor(model => model.DateOfBirth)*@
+            Date Of Birth
         </th>
         <th>
             @*@Html.DisplayNameFor(model => model.IsDependant)*@
@@ -40,8 +55,14 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
+@foreach (var item in Model.Patients) 
+{
+    string selectedRow = "";
+    if (item.ID == ViewBag.PatientID)
+    {
+        selectedRow = "success";
+    }
+    <tr class="@selectedRow" valign="top">
         <td>
             @Html.DisplayFor(modelItem => item.Sponsor.FullName)
         </td>
@@ -67,11 +88,97 @@
             @Html.DisplayFor(modelItem => item.FullName)
         </td>*@
         <td>
+            @Html.ActionLink("Select", "Index", new { id = item.ID }) |
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
     </tr>
 }
-
 </table>
+
+@if (Model.PhoneNumbers != null)
+{
+    <h3>Phone Numbers</h3>
+    <table class="table">
+        <tr>
+            <th>Phone Type</th>
+            <th>Phone Number</th>
+        </tr>
+
+        @foreach (var item in Model.PhoneNumbers)
+        {
+            string selectedRow = "";
+            if (item.PhoneID == ViewBag.PhoneID)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @item.PhoneType
+                </td>
+                <td>
+                    @item.AreaCode @item.Number
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+@*@if (Model.PostalAddresses != null)
+{
+    <h3>Address</h3>
+    <table class="table">
+        <tr>
+            <th>Address</th>
+        </tr>
+
+        @foreach (var item in Model.PostalAddresses)
+        {
+            string selectedRow = "";
+            if (item.PostalAddressID == ViewBag.AddressID)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @item.FullAddress
+                </td>
+            </tr>
+        }
+    </table>
+}*@
+
+
+@if (Model.Dependants != null)
+{
+    <h3>Dependants</h3>
+    <table class="table">
+        <tr>
+            @*<th></th>*@
+            <th>Full Name</th>
+            @*<th>Initials</th>
+            <th>Last Name</th>*@
+        </tr>
+
+        @foreach (var item in Model.Dependants)
+        {
+            string selectedRow = "";
+            if (item.ID == ViewBag.DependantID)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                @*<td>
+                    @Html.ActionLink("Select", "Index", new { dependantID = item.ID })
+                </td>*@
+                <td>
+                    @item.FullName
+                </td>
+                @*<td>
+                    @item.AreaCode @item.Number
+                </td>*@
+            </tr>
+        }
+    </table>
+}

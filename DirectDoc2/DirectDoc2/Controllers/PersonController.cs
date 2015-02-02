@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using DirectDoc2.Models;
 using DirectDoc2.DAL;
 using DirectDoc2.ViewModels;
+using System;
 
 namespace DirectDoc2.Controllers
 {
@@ -13,34 +14,67 @@ namespace DirectDoc2.Controllers
         private ClinicContext db = new ClinicContext();
 
         // GET: /Person/
-        public ActionResult Index(int? id, int? phoneID, int? addressID)
+        public ActionResult Index(string sortOrder, string searchText, int? id, int? phoneID, int? sponsorID, int? addressID)
         {
             var viewModel = new PatientData();
 
-            //var clients = db.Clients.Include(p => p.Sponsor)
             viewModel.Patients = db.Clients
                                     .Include(p => p.PhoneNumbers)
-                                    .Include(p => p.PostalAddresses)
-                                    //.Include(p => p.Dependants.Select(d => d.SponsorID == p.ID))
-                                    //.Include(p => p.Consultations)
-                                    .OrderBy(p => p.LastName);
+                                    .Include(p => p.Dependants)
+                                    .Include(p => p.PostalAddresses);
+                //.Include(p => p.Consultations)
+                                   // .OrderBy(p => p.LastName);
 
+            ViewBag.FirstNameSortParm = String.IsNullOrEmpty(sortOrder) ? "first_name_desc" : "";
+            ViewBag.LastNameSortParm = String.IsNullOrEmpty(sortOrder) ? "last_name_desc" : "";
+
+            if (!String.IsNullOrEmpty(searchText))
+            {
+                viewModel.Patients = viewModel.Patients.Where(p => p.LastName.Contains(searchText)
+                                                            || p.FirstName.Contains(searchText));
+            }
+
+            switch (sortOrder)
+            {
+                case "first_name_desc":
+                    viewModel.Patients = viewModel.Patients.OrderBy(p => p.FirstName);
+                    break;
+                case "last_name_desc":
+                    viewModel.Patients = viewModel.Patients.OrderBy(s => s.LastName);
+                    break;
+                //case "sponsor_name_desc":
+                //    clients = clients.OrderByDescending(s => s.Sponsor);
+                //    break;
+                default:
+                    viewModel.Patients = viewModel.Patients.OrderByDescending(s => s.LastName);
+                    break;
+            }
+            
             if(id != null)
             {
                 ViewBag.PatientID = id.Value;
                 viewModel.PhoneNumbers = viewModel.Patients.Where(
                     p => p.ID == id.Value).Single().PhoneNumbers;
+
+                viewModel.Dependants = viewModel.Patients.Where(
+                    p => p.ID == id.Value).Single().Dependants.Where(d => d.SponsorID == id.Value);
             }
 
-            //if (addressID != null)
-            //{
-            //    ViewBag.AddressID = addressID.Value;
-            //    viewModel.PhoneNumbers = viewModel.Patients.Where(
-            //        p => p.ID == id.Value).Single().PhoneNumbers;
-            //}
+            if (phoneID != null)
+            {
+                ViewBag.PhoneID = phoneID.Value;
+                viewModel.PhoneNumbers = viewModel.Patients.Where(
+                    p => p.ID == id.Value).Single().PhoneNumbers;
+            }
 
-            return View(viewModel);
+            if (addressID != null)
+            {
+                ViewBag.AddressID = addressID.Value;
+                viewModel.PostalAddresses = viewModel.Patients.Where(
+                    p => p.ID == id.Value).Single().PostalAddresses;
+            }
             //return View(clients.ToList());
+            return View(viewModel.Patients);
         }
 
         // GET: /Person/Details/5

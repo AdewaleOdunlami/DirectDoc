@@ -10,7 +10,7 @@ namespace DirectDoc2.DAL
         public ClinicContext()
             : base("ClinicContext")
         {
-            this.Configuration.LazyLoadingEnabled = false;
+            //this.Configuration.LazyLoadingEnabled = false;
         }
 
         public DbSet<Invoice> Invoices { get; set; }
