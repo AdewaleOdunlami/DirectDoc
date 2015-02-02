@@ -74,7 +74,7 @@ namespace DirectDoc2.Controllers
                     p => p.ID == id.Value).Single().PostalAddresses;
             }
             //return View(clients.ToList());
-            return View(viewModel.Patients);
+            return View(viewModel);
         }
 
         // GET: /Person/Details/5
