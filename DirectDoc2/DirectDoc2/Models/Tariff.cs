@@ -6,7 +6,7 @@ namespace DirectDoc2.Models
     public class Tariff
     {
         public int ID { get; set; }
-
+        [Required]
         [Display(Name="Tariff")]
         public string TariffType { get; set; }
     }
