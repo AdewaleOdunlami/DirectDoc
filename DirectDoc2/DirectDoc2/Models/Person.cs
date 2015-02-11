@@ -37,7 +37,7 @@ namespace DirectDoc2.Models
 
         public virtual Person Sponsor { get; set; }
 
-        public ICollection<Phone> PhoneNumbers { get; set; }
+        public virtual ICollection<Phone> PhoneNumbers { get; set; }
         public virtual ICollection<PostalAddress> PostalAddresses { get; set; }
         public virtual ICollection<Person> Dependants { get; set; }
         public virtual ICollection<Consultation> Consultations { get; set; }

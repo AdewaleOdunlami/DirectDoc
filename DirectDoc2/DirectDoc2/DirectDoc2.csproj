@@ -44,6 +44,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -163,7 +166,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\PostalAddressController.cs" />
     <Compile Include="Controllers\ConsultationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
@@ -274,11 +277,11 @@
     <Content Include="Views\Consultation\Details.cshtml" />
     <Content Include="Views\Consultation\Edit.cshtml" />
     <Content Include="Views\Consultation\Index.cshtml" />
-    <Content Include="Views\Address\Create.cshtml" />
-    <Content Include="Views\Address\Delete.cshtml" />
-    <Content Include="Views\Address\Details.cshtml" />
-    <Content Include="Views\Address\Edit.cshtml" />
-    <Content Include="Views\Address\Index.cshtml" />
+    <Content Include="Views\PostalAddress\Create.cshtml" />
+    <Content Include="Views\PostalAddress\Delete.cshtml" />
+    <Content Include="Views\PostalAddress\Details.cshtml" />
+    <Content Include="Views\PostalAddress\Edit.cshtml" />
+    <Content Include="Views\PostalAddress\Index.cshtml" />
     <Content Include="Views\Person\Create.cshtml" />
     <Content Include="Views\Person\Delete.cshtml" />
     <Content Include="Views\Person\Details.cshtml" />

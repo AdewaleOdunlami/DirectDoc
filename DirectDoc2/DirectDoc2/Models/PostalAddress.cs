@@ -17,7 +17,11 @@ namespace DirectDoc2.Models
         [Display(Name="City/State/Province")]
         [StringLength(500,MinimumLength=2,ErrorMessage="Please enter the name of a city")]
         public string City { get; set; }
-        public string Country { get { return countryName; } private set { countryName = "Namibia";} }
+        public string Country 
+        { 
+            get { return countryName; } 
+            private set { countryName = "Namibia";} 
+        }
         public string FullAddress 
         {
             get { return BoxNumber + ", " + City + ", " + Country;}

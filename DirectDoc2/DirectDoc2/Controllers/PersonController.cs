@@ -19,36 +19,12 @@ namespace DirectDoc2.Controllers
             var viewModel = new PatientData();
 
             viewModel.Patients = db.Clients
-                                    .Include(p => p.PhoneNumbers)
+                .Include(p => p.Dependants)
                                     .Include(p => p.Dependants)
+                                    .Include(p => p.PhoneNumbers)
                                     .Include(p => p.PostalAddresses);
                 //.Include(p => p.Consultations)
                                    // .OrderBy(p => p.LastName);
-
-            ViewBag.FirstNameSortParm = String.IsNullOrEmpty(sortOrder) ? "first_name_desc" : "";
-            ViewBag.LastNameSortParm = String.IsNullOrEmpty(sortOrder) ? "last_name_desc" : "";
-
-            if (!String.IsNullOrEmpty(searchText))
-            {
-                viewModel.Patients = viewModel.Patients.Where(p => p.LastName.Contains(searchText)
-                                                            || p.FirstName.Contains(searchText));
-            }
-
-            switch (sortOrder)
-            {
-                case "first_name_desc":
-                    viewModel.Patients = viewModel.Patients.OrderBy(p => p.FirstName);
-                    break;
-                case "last_name_desc":
-                    viewModel.Patients = viewModel.Patients.OrderBy(s => s.LastName);
-                    break;
-                //case "sponsor_name_desc":
-                //    clients = clients.OrderByDescending(s => s.Sponsor);
-                //    break;
-                default:
-                    viewModel.Patients = viewModel.Patients.OrderByDescending(s => s.LastName);
-                    break;
-            }
             
             if(id != null)
             {
@@ -56,23 +32,50 @@ namespace DirectDoc2.Controllers
                 viewModel.PhoneNumbers = viewModel.Patients.Where(
                     p => p.ID == id.Value).Single().PhoneNumbers;
 
+                viewModel.PostalAddresses = viewModel.Patients.Where(
+                    p => p.ID == id.Value).Single().PostalAddresses;
+
                 viewModel.Dependants = viewModel.Patients.Where(
                     p => p.ID == id.Value).Single().Dependants.Where(d => d.SponsorID == id.Value);
             }
-
             if (phoneID != null)
             {
                 ViewBag.PhoneID = phoneID.Value;
                 viewModel.PhoneNumbers = viewModel.Patients.Where(
                     p => p.ID == id.Value).Single().PhoneNumbers;
             }
-
             if (addressID != null)
             {
                 ViewBag.AddressID = addressID.Value;
                 viewModel.PostalAddresses = viewModel.Patients.Where(
                     p => p.ID == id.Value).Single().PostalAddresses;
             }
+
+            //Conduct search on Index
+            ViewBag.FirstNameSortParm = String.IsNullOrEmpty(sortOrder) ? "first_name_desc" : "";
+            ViewBag.LastNameSortParm = String.IsNullOrEmpty(sortOrder) ? "last_name_desc" : "";
+
+            if (!String.IsNullOrEmpty(searchText))
+            {
+                viewModel.Patients = db.Clients.Where(p => p.LastName.Contains(searchText)
+                                                            || p.FirstName.Contains(searchText));
+            }
+
+            switch (sortOrder)
+            {
+                case "first_name_desc":
+                    viewModel.Patients = db.Clients.OrderByDescending(p => p.FirstName);
+                    break;
+                case "last_name_desc":
+                    viewModel.Patients = db.Clients.OrderByDescending(s => s.LastName);
+                    break;
+                default:
+                    viewModel.Patients = db.Clients.OrderBy(s => s.LastName);
+                    break;
+            }
+
+
+
             //return View(clients.ToList());
             return View(viewModel);
         }
@@ -95,9 +98,9 @@ namespace DirectDoc2.Controllers
         // GET: /Person/Create
         public ActionResult Create()
         {
-            var mainMember = from mainmember in db.Clients
-                             where mainmember.IsDependant == false
-                             select mainmember;
+            var mainMember = from individual in db.Clients
+                             where individual.IsDependant == false
+                             select individual;
 
             ViewBag.SponsorID = new SelectList(mainMember, "ID", "FullName");
             return View();
@@ -117,9 +120,9 @@ namespace DirectDoc2.Controllers
                 return RedirectToAction("Index");
             }
 
-            var mainMember = from mainmember in db.Clients
-                             where mainmember.IsDependant == false
-                             select mainmember;
+            var mainMember = from individual in db.Clients
+                             where individual.IsDependant == false
+                             select individual;
 
             ViewBag.SponsorID = new SelectList(mainMember, "ID", "FullName", person.SponsorID);
             return View(person);

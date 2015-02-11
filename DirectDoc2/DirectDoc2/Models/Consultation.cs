@@ -44,18 +44,18 @@ namespace DirectDoc2.Models
             }
             private set
             {
-                var description = from modality in db.Modalities
-                                  where modality.ModalityID == ModalityID
+                var getModalityDescription = from modality in db.Modalities
+                                  where modality.ModalityID == this.ModalityID
                                   select modality.Description;
 
-                if(description.Any())
+                if(getModalityDescription.Any())
                 {
-                    foreach(var d in description)
+                    foreach(var modality in getModalityDescription)
                     {
-                        modalityDescription = d.ToString();
+                        modalityDescription = modality.ToString();
                     }
                 }
-                else
+                else if(getModalityDescription == null)
                 {
                     modalityDescription = "No description";
                 }

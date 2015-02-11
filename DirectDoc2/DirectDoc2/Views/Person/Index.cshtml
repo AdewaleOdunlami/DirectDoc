@@ -97,6 +97,7 @@
 }
 </table>
 
+
 @if (Model.PhoneNumbers != null)
 {
     <h3>Phone Numbers</h3>
@@ -125,13 +126,13 @@
     </table>
 }
 
-@*@if (Model.PostalAddresses != null)
+@if (Model.PostalAddresses != null)
 {
-    <h3>Address</h3>
+    <h3>Postal Address</h3>
     <table class="table">
-        <tr>
+        @*<tr>
             <th>Address</th>
-        </tr>
+        </tr>*@
 
         @foreach (var item in Model.PostalAddresses)
         {
@@ -147,19 +148,17 @@
             </tr>
         }
     </table>
-}*@
+}
 
 
 @if (Model.Dependants != null)
 {
     <h3>Dependants</h3>
     <table class="table">
-        <tr>
+        @*<tr>*@
             @*<th></th>*@
-            <th>Full Name</th>
-            @*<th>Initials</th>
-            <th>Last Name</th>*@
-        </tr>
+            @*<th>Full Name</th>
+        </tr>*@
 
         @foreach (var item in Model.Dependants)
         {

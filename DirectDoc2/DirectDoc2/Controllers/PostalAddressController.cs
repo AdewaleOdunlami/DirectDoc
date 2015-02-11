@@ -11,7 +11,7 @@ using DirectDoc2.DAL;
 
 namespace DirectDoc2.Controllers
 {
-    public class AddressController : Controller
+    public class PostalAddressController : Controller
     {
         private ClinicContext db = new ClinicContext();
 

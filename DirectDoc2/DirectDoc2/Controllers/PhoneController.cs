@@ -12,7 +12,7 @@ using DirectDoc2.DAL;
 namespace DirectDoc2.Controllers
 {
     [Authorize]
-    [HandleError(ExceptionType = typeof(System.Data.DataException))]
+    //[HandleError(ExceptionType = typeof(System.Data.DataException))]
     public class PhoneController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -42,11 +42,11 @@ namespace DirectDoc2.Controllers
         // GET: /Phone/Create
         public ActionResult Create()
         {
-            var sponsor = from s in db.Clients
-                          where s.IsDependant == false
-                          select s;
+            var mainMember = from individual in db.Clients
+                          where individual.IsDependant == false
+                          select individual;
 
-            ViewBag.PersonID = new SelectList(sponsor, "ID", "FullName");
+            ViewBag.PersonID = new SelectList(mainMember, "ID", "FullName");
             return View();
         }
 
@@ -57,9 +57,9 @@ namespace DirectDoc2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="PhoneID,PersonID,PhoneType,AreaCode,Number")] Phone phone)
         {
-            var sponsor = from s in db.Clients
-                          where s.IsDependant == false
-                          select s;
+            var mainMember = from individual in db.Clients
+                             where individual.IsDependant == false
+                             select individual;
 
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace DirectDoc2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PersonID = new SelectList(sponsor, "ID", "FullName", phone.PersonID);
+            ViewBag.PersonID = new SelectList(mainMember, "ID", "FullName", phone.PersonID);
             return View(phone);
         }
 
