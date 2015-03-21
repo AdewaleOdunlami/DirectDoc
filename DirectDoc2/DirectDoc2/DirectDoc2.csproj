@@ -166,8 +166,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\PostalAddressController.cs" />
     <Compile Include="Controllers\ConsultationController.cs" />
+    <Compile Include="Controllers\PostalAddressController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\MedicalController.cs" />
@@ -180,6 +180,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503210532156_IntitialCreate.cs" />
+    <Compile Include="Migrations\201503210532156_IntitialCreate.Designer.cs">
+      <DependentUpon>201503210532156_IntitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Consultation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -193,6 +198,7 @@
     <Compile Include="Models\Tariff.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\Consultation.cs" />
     <Compile Include="ViewModels\PatientData.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -204,7 +210,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Properties\PublishProfiles\directdoc.pubxml" />
+    <None Include="Properties\PublishProfiles\directdoc - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\directdoc - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -272,11 +279,6 @@
     <Content Include="Views\Modality\Details.cshtml" />
     <Content Include="Views\Modality\Edit.cshtml" />
     <Content Include="Views\Modality\Index.cshtml" />
-    <Content Include="Views\Consultation\Create.cshtml" />
-    <Content Include="Views\Consultation\Delete.cshtml" />
-    <Content Include="Views\Consultation\Details.cshtml" />
-    <Content Include="Views\Consultation\Edit.cshtml" />
-    <Content Include="Views\Consultation\Index.cshtml" />
     <Content Include="Views\PostalAddress\Create.cshtml" />
     <Content Include="Views\PostalAddress\Delete.cshtml" />
     <Content Include="Views\PostalAddress\Details.cshtml" />
@@ -287,6 +289,11 @@
     <Content Include="Views\Person\Details.cshtml" />
     <Content Include="Views\Person\Edit.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
+    <Content Include="Views\Consultation\Create.cshtml" />
+    <Content Include="Views\Consultation\Delete.cshtml" />
+    <Content Include="Views\Consultation\Details.cshtml" />
+    <Content Include="Views\Consultation\Edit.cshtml" />
+    <Content Include="Views\Consultation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -297,6 +304,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201503210532156_IntitialCreate.resx">
+      <DependentUpon>201503210532156_IntitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

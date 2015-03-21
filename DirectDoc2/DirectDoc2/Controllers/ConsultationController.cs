@@ -40,8 +40,8 @@ namespace DirectDoc2.Controllers
         // GET: /Consultation/Create
         public ActionResult Create()
         {
-            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "NappiCode");
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title");
+            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "CodeDescription");
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName");
             return View();
         }
 
@@ -59,8 +59,8 @@ namespace DirectDoc2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "NappiCode", consultation.ModalityID);
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title", consultation.PersonID);
+            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "CodeDescription", consultation.ModalityID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", consultation.PersonID);
             return View(consultation);
         }
 

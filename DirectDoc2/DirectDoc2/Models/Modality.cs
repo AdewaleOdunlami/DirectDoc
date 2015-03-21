@@ -48,7 +48,6 @@ namespace DirectDoc2.Models
                 {
                     names.Add(" ");
                 }
-
                 codeDescription = ModalityCode + " " + Description + " " + names[0];
             }
         }

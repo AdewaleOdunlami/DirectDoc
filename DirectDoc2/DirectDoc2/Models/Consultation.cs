@@ -33,7 +33,6 @@ namespace DirectDoc2.Models
         [Required]
         [Range(1, 500)]
         public int? Quantity { get; set; }
-        [Required]
         public string ModalityDescription
         {
             //get;
@@ -45,24 +44,23 @@ namespace DirectDoc2.Models
             private set
             {
                 var getModalityDescription = from modality in db.Modalities
-                                  where modality.ModalityID == this.ModalityID
-                                  select modality.Description;
+                                                where modality.ModalityID == this.ModalityID
+                                                select modality.Description;
 
                 if(getModalityDescription.Any())
                 {
                     foreach(var modality in getModalityDescription)
                     {
-                        modalityDescription = modality.ToString();
+                        this.modalityDescription = modality;
                     }
                 }
-                else if(getModalityDescription == null)
+                else 
                 {
-                    modalityDescription = "No description";
+                    this.modalityDescription = "No description";
                 }
             }
         }
 
-        [Required]
         [Display(Name = "Unit Price")]
         [DisplayFormat(DataFormatString= "{0:C}")]
         public decimal? UnitPrice 
@@ -75,12 +73,12 @@ namespace DirectDoc2.Models
             {
                 //determine if patient is a dependant
                 var isDependant = from person in db.Clients
-                                   where person.IsDependant == true && person.ID == PersonID
+                                   where person.IsDependant == true && person.ID == this.PersonID
                                    select person;
 
                 if(isDependant.Any())
                 {
-                    //get main member id
+                    //get main member
                     var sponsor = from person in db.Clients
                                   join dependant in isDependant
                                     on person.ID equals dependant.SponsorID into spondordetails
@@ -108,13 +106,14 @@ namespace DirectDoc2.Models
                 }
                 else
                 {
+                    //patient is not a dependant
                     var medicalinfo = from med in db.MedicalAids
-                                      where med.PersonID == PersonID
+                                      where med.PersonID == this.PersonID
                                       select med;
 
                     var tariffinfo = from t in db.Modalities
-                                     join med in medicalinfo
-                                        on t.TariffID equals med.TariffID into tariffdetails
+                                     join m in medicalinfo
+                                        on t.TariffID equals m.TariffID into tariffdetails
                                         from td in tariffdetails
                                         select t;
 
