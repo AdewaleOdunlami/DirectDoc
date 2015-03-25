@@ -12,10 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Modality.NappiCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Person.Title)
+            Name of Patient
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ConsultationDate)
@@ -24,10 +21,13 @@
             @Html.DisplayNameFor(model => model.ConsultationTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Quantity)
+            Item Description
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ModalityDescription)
+            @Html.DisplayNameFor(model => model.Modality.NappiCode)
+        </th>
+        <th>
+            Qty
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UnitPrice)
@@ -41,10 +41,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Modality.NappiCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Person.Title)
+            @Html.DisplayFor(modelItem => item.Person.FullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ConsultationDate)
@@ -53,10 +50,13 @@
             @Html.DisplayFor(modelItem => item.ConsultationTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
+            @Html.DisplayFor(modelItem => item.ModalityDescription)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ModalityDescription)
+            @Html.DisplayFor(modelItem => item.Modality.NappiCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.UnitPrice)

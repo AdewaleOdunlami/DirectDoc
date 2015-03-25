@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using DirectDoc2.DAL;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DirectDoc2.Models
 {
@@ -25,7 +26,7 @@ namespace DirectDoc2.Models
         [Required]
         [DataType(DataType.Time)]
         [Display(Name = "Time")]
-        [DisplayFormat(DataFormatString="{0:t}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString="{0:HH-mm}", ApplyFormatInEditMode = true)]
         public DateTime ConsultationTime { get; set; }
         [Required]
         [Display(Name = "Modality Code")]
@@ -33,6 +34,7 @@ namespace DirectDoc2.Models
         [Required]
         [Range(1, 500)]
         public int? Quantity { get; set; }
+        [Display(Name="Description")]
         public string ModalityDescription
         {
             //get;
@@ -129,6 +131,7 @@ namespace DirectDoc2.Models
         }
         [Display(Name = "Total")]
         [DisplayFormat(DataFormatString="{0:C}")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal? SubTotal
         {
             get { return Convert.ToDecimal(Quantity) * UnitPrice; }

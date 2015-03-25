@@ -19,7 +19,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PersonID, "Patient Name", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("PersonID", String.Empty)
+                @Html.DropDownList("PersonID",String.Empty)
                 @Html.ValidationMessageFor(model => model.PersonID)
             </div>
         </div>
@@ -56,12 +56,12 @@
             </div>
         </div>
 
-        <div class="grouphidden">
+        @*<div class="grouphidden">
             <div class="form-group">
                 @Html.LabelFor(model => model.ModalityDescription, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.ModalityDescription)
-                    @Html.ValidationMessageFor(model => model.Quantity)
+                    @Html.ValidationMessageFor(model => model.ModalityDescription)
                 </div>
             </div>
 
@@ -69,7 +69,7 @@
                 @Html.LabelFor(model => model.UnitPrice, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.UnitPrice)
-                    @Html.ValidationMessageFor(model => model.Quantity)
+                    @Html.ValidationMessageFor(model => model.UnitPrice)
                 </div>
             </div>
 
@@ -77,11 +77,10 @@
                 @Html.LabelFor(model => model.SubTotal, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.SubTotal)
-                    @Html.ValidationMessageFor(model => model.Quantity)
+                    @Html.ValidationMessageFor(model => model.SubTotal)
                 </div>
             </div>
-        </div>
-        
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

@@ -7,13 +7,13 @@ namespace DirectDoc2.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.0-20911")]
-    public sealed partial class IntitialCreate : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(IntitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201503210532156_IntitialCreate"; }
+            get { return "201503240052154_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source
