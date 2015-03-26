@@ -18,7 +18,7 @@
         @Html.HiddenFor(model => model.ConsultationID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PersonID, "PersonID", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PersonID, "Patient Name", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("PersonID", String.Empty)
                 @Html.ValidationMessageFor(model => model.PersonID)
@@ -42,7 +42,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ModalityID, "ModalityID", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ModalityID, "Modality Code", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ModalityID", String.Empty)
                 @Html.ValidationMessageFor(model => model.ModalityID)

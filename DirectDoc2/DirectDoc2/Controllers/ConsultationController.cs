@@ -76,8 +76,8 @@ namespace DirectDoc2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "NappiCode", consultation.ModalityID);
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title", consultation.PersonID);
+            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "CodeDescription", consultation.ModalityID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", consultation.PersonID);
             return View(consultation);
         }
 
@@ -94,8 +94,8 @@ namespace DirectDoc2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "NappiCode", consultation.ModalityID);
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title", consultation.PersonID);
+            ViewBag.ModalityID = new SelectList(db.Modalities, "ModalityID", "CodeDescription", consultation.ModalityID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", consultation.PersonID);
             return View(consultation);
         }
 

@@ -1,4 +1,5 @@
 ﻿@model DirectDoc2.Models.Consultation
+@using DirectDoc2.DAL
 
 @{
     ViewBag.Title = "Delete";
@@ -19,12 +20,20 @@
             @Html.DisplayFor(model => model.Modality.NappiCode)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Person.Title)
-        </dt>
+           @* @Html.DisplayNameFor(model => model.Person.Title)*@
+            @{
+                ClinicContext db = new ClinicContext();
+                var fullname = from person in db.Clients
+                               where person.ID == Model.PersonID
+                               select person.FullName;
+                               
+                <dt>
+                    @fullname
+                </dt>
+            }
 
         <dd>
-            @Html.DisplayFor(model => model.Person.Title)
+            @Html.DisplayFor(model => model.Person.FullName)
         </dd>
 
         <dt>

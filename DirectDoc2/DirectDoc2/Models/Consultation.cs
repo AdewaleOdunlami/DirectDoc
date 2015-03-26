@@ -21,12 +21,12 @@ namespace DirectDoc2.Models
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Date")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ConsultationDate { get; set; }
         [Required]
         [DataType(DataType.Time)]
         [Display(Name = "Time")]
-        [DisplayFormat(DataFormatString="{0:HH-mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString="{0:HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime ConsultationTime { get; set; }
         [Required]
         [Display(Name = "Modality Code")]
