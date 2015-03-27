@@ -16,32 +16,22 @@ namespace DirectDoc2.Models
         private string policyNumber;
         private string invoiceTo;
         private string mainMemberAddress;
-        private string patientName;
-        private string patientBirthDate;
-
+        private int invoiceNumber;
+        private DateTime? patientBirthDate;
+        
+        
         public int InvoiceID { get; set; }
         public int? PersonID { get; set; }
-        //invoice number and date
-        private int invoiceNumber;
         [Display(Name = "Invoice Number")]
         public int? InvoiceNumber
         {
-            get
-            { 
-                return invoiceNumber;
-            }
-            private set 
-            {
-                ++invoiceNumber;
-            }
+            get { return invoiceNumber; }
+            private set { ++invoiceNumber; }
         }
         [DataType(DataType.Date)]
         [Display(Name = "Invoice Date")]
-        public DateTime InvoiceDate
-        {
-            get;
-            set;
-        }
+        [DisplayFormat(DataFormatString="{0:yyyy-MM-dd}", ApplyFormatInEditMode=true)]
+        public DateTime InvoiceDate { get; set; }
 
         //insurance name and policy number
         [Display(Name = "Insurance Name")]
@@ -135,11 +125,11 @@ namespace DirectDoc2.Models
                                        where person.ID == PersonID && person.SponsorID != null
                                        select person;
 
-                    var sponsor =  from person in db.Clients 
-                                   join dependant in isDependant 
-                                    on person.ID equals dependant.ID into sponsordetails
+                    var sponsor =  from dependant in isDependant 
+                                   join mainmember in db.Clients 
+                                    on dependant.SponsorID equals mainmember.ID into sponsordetails
                                       from sd in sponsordetails
-                                      select person;
+                                      select sd;
 
                     if (sponsor.Any())
                     {
@@ -152,85 +142,111 @@ namespace DirectDoc2.Models
             }
         }
 
-        //[Display(Name = "Postal Address")]
-        //public string Address 
-        //{
-        //    get
-        //    {
-        //        //retrieve details of mainmember
-        //        var isMainMember = from patient in db.PostalAddresses
-        //                           where patient.PersonID == PersonID
-        //                           select patient;
-
-        //        //retrieve mainmember's fullname 
-        //        if (isMainMember.Any())
-        //        {
-        //            foreach (var person in isMainMember)
-        //            {
-        //                this.mainMemberName = Convert.ToString(person.FullAddress) ;
-        //            }
-        //        }
-        //        //retrieve dependant's fullname
-        //        else
-        //        {
-        //            var isDependant = from mainmember in isMainMember
-        //                              join dependant in db.Clients
-        //                                 on mainmember.ID equals dependant.SponsorID into sponsordetails
-        //                              from sd in sponsordetails
-        //                              select mainmember;
-
-        //            if (isDependant.Any())
-        //            {
-        //                foreach (var person in isDependant)
-        //                {
-        //                    this.mainMemberName = Convert.ToString(person.FullName);
-        //                }
-        //            }
-        //        }
-
-        //        return this.mainMemberName;
-        //    }//set; 
-        //}
-
-        ////patient name and birthdate
-        //[Display(Name = "Name of Patient")]
-        //public string FullNameOfPatient 
-        //{
-        //    get
-        //    {
-        //        //retrieve details of patient
-        //        var patientDetails = from patient in db.Clients
-        //                             where patient.ID == PersonID
-        //                             select patient.FullName;
-
-        //        //retrieve name of main member if any
-        //        var hasMainMember = from person in db.Clients
-        //                            join mainmember in patientDetails on person.ID equals mainmember.SponsorID into sponsordetails
-        //                            from sd in sponsordetails
-        //                            select new { person.FullName };
-
-        //        this.mainMember = Convert.ToString(hasMainMember);
-        //        return this.mainMember;
-        //    }//set; 
-        //}
-        //[Display(Name = "Patient's D.O.B")]
-        //public DateTime PatientBirthDate 
-        //{
-        //    get { return db.Clients.;}
-        //    set; 
-        //}
-
-        public decimal Total
+        [Display(Name = "Postal Address")]
+        public string Address
         {
-            get
+            //set address
+            private set
             {
-                foreach (Consultation consultation in db.Consultations)
+                //Is mainmember
+                var isMainMember = from patient in db.PostalAddresses
+                                    where patient.PersonID == PersonID
+                                    select patient;
+
+                //retrieve mainmember's address 
+                if (isMainMember.Any())
                 {
-                    grandTotal += Convert.ToDecimal(consultation.SubTotal);
+                    foreach (var person in isMainMember)
+                    {
+                        this.mainMemberAddress = Convert.ToString(person.FullAddress);
+                    }
                 }
-                return grandTotal;
+                
+                else
+                {
+                    //Is dependant
+                    var isDependant = from dependant in db.Clients
+                                         where dependant.ID == PersonID
+                                            select dependant;
+
+                    //get dependant's mainmember
+                    var mainmember = from dependant in isDependant
+                                     join sponsor in db.PostalAddresses
+                                     on dependant.SponsorID equals sponsor.PersonID into getaddress
+                                     from dependantaddress in getaddress
+                                     select dependantaddress;
+
+                    //retrieve dependant's address
+                    if (mainmember.Any())
+                    {
+                        foreach (var person in mainmember)
+                        {   
+                            this.mainMemberAddress = Convert.ToString(person.FullAddress);
+                        }
+                    }
+                }
             }
-            //set;
+
+            //get address
+            get { return this.mainMemberAddress; } 
+        }
+
+        [Display(Name = "Patient's D.O.B")]
+        [DataType(DataType.Date)]
+        public DateTime? PatientBirthDate
+        {
+            private set
+            {
+                //retrieve details of patient
+                var patientDetails = from patient in db.Invoices
+                                     join thepatient in db.Clients
+                                     on patient.PersonID equals thepatient.ID into details
+                                     from d in details
+                                     select d;
+
+                if(patientDetails.Any())
+                {
+                   
+                    foreach (var patient in patientDetails)
+                    {
+                        try
+                        {
+                            this.patientBirthDate = patient.DateOfBirth;
+                        }
+                        catch(System.ArgumentNullException e)
+                        {
+                            this.patientBirthDate = null;
+                        }   
+                    }
+                } 
+            }
+
+            get { return this.patientBirthDate; }
+            
+        }
+
+        public decimal? Total
+        {
+            private set
+            {
+                var consults = from c in db.Consultations
+                               where c.PersonID == this.PersonID 
+                                    && c.ConsultationDate == this.InvoiceDate
+                               select c;
+
+                if (consults.Any())
+                {
+                    foreach (var consult in consults)
+                    {
+                        grandTotal += Convert.ToDecimal(consult.SubTotal);
+                    }
+                }
+                else
+                {
+                    ;
+                }
+            }
+            get { return grandTotal; }
         }
 
         public virtual Person Person { get; set; }

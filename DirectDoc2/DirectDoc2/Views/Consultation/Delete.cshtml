@@ -1,5 +1,6 @@
 ﻿@model DirectDoc2.Models.Consultation
 @using DirectDoc2.DAL
+@using DirectDoc2.Models
 
 @{
     ViewBag.Title = "Delete";
@@ -12,29 +13,29 @@
     <h4>Consultation</h4>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
-            @Html.DisplayNameFor(model => model.Modality.NappiCode)
+             Patient Name
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Modality.NappiCode)
-        </dd>
-
-           @* @Html.DisplayNameFor(model => model.Person.Title)*@
-            @{
-                ClinicContext db = new ClinicContext();
-                var fullname = from person in db.Clients
-                               where person.ID == Model.PersonID
-                               select person.FullName;
+        @*@Html.DisplayFor(model => model.Person.FullName)*@
+        @{
+            ClinicContext db = new ClinicContext();
+            var fullname = from person in db.Clients
+                            where person.ID == Model.PersonID
+                            select person;
                                
-                <dt>
-                    @fullname
-                </dt>
+            if(fullname.Any())
+            {
+                foreach(var person in fullname)
+                {
+                    <dd>
+                        @person.FullName
+                    </dd> 
+                }
+                       
             }
-
-        <dd>
-            @Html.DisplayFor(model => model.Person.FullName)
-        </dd>
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.ConsultationDate)
@@ -53,19 +54,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.ModalityDescription)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.ModalityDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
         </dd>
 
         <dt>

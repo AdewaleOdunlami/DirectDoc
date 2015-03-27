@@ -1,5 +1,6 @@
 ﻿@model DirectDoc2.Models.Invoice
 @using DirectDoc2.DAL
+@using DirectDoc2.Models
 
 @{
     ViewBag.Title = "Details";
@@ -12,48 +13,33 @@
 	<hr />
     <dl class="dl-horizontal">
         <dt>
-            @*@Html.DisplayNameFor(model => model.Person.Title)*@
-            Patient
+            Patient Name
         </dt>
 
-        <dd>
-            @*@Html.DisplayFor(model => model.Person.FullName)*@
             @{
                 ClinicContext db = new ClinicContext();
-
-                var patient = from person in db.Clients
-                              where person.ID == Model.PersonID
-                              select person;
-                              
-                foreach(var person in patient)
+                var patientname = from patient in db.Clients
+                            where patient.ID == Model.PersonID
+                            select patient;
+                            
+                if(patientname.Any())
                 {
-                    @person.FullName;
-                }       
+                    foreach(var name in patientname)
+                    {
+                        <dd>
+                            @name.FullName
+                        </dd>
+                            
+                    }
+                }
             }
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.InvoiceNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.InvoiceNumber)
-        </dd>
-
+       
         <dt>
             @Html.DisplayNameFor(model => model.InvoiceDate)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.InvoiceDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.InvoiceTo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.InvoiceTo)
         </dd>
 
         <dt>
@@ -72,7 +58,47 @@
             @Html.DisplayFor(model => model.PolicyNumber)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoiceTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvoiceTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PatientBirthDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PatientBirthDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
     </dl>
+</div>
+
+<div class="row">
+        <div class="col-md-1">Code</div>
+        <div class="col-md-1">Description</div>
+        <div class="col-md-1">Qty.</div>
+        <div class="col-md-1">Price</div>
+        <div class="col-md-1">Total</div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.InvoiceID }) |

@@ -34,17 +34,32 @@ namespace DirectDoc2.Controllers
             {
                 return HttpNotFound();
             }
+            
+            List<Consultation> listOfConsultations = new List<Consultation>();
+
+            var consultations = from consults in db.Consultations
+                                join date in db.Invoices
+                                on consults.PersonID equals date.PersonID 
+                                where consults.ConsultationDate ==  date.InvoiceDate 
+                                select consults;
+
+            if (consultations.Any())
+            {
+                foreach(var consultation in consultations)
+                {
+                    listOfConsultations.Add(consultation);
+                }   
+            }
+
+            ViewBag.Consultations = listOfConsultations;
+
             return View(invoice);
         }
 
         // GET: /Invoice/Create
         public ActionResult Create()
         {
-            var mainmember = from person in db.Clients
-                             where person.IsDependant == false
-                             select person;
-
-            ViewBag.PersonID = new SelectList(mainmember, "ID", "FullName");
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName");
             return View();
         }
 
@@ -53,7 +68,7 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="InvoiceID,PersonID,InvoiceNumber,InvoiceDate")] Invoice invoice)
+        public ActionResult Create([Bind(Include="InvoiceID,PersonID,InvoiceDate,NameOfAid,PolicyNumber,InvoiceTo,Address,PatientBirthDate")] Invoice invoice)
         {
             if (ModelState.IsValid)
             {
@@ -62,11 +77,7 @@ namespace DirectDoc2.Controllers
                 return RedirectToAction("Index");
             }
 
-            var mainmember = from person in db.Clients
-                             where person.IsDependant == false
-                             select person;
-
-            ViewBag.PersonID = new SelectList(mainmember, "ID", "FullName", invoice.PersonID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", invoice.PersonID);
             return View(invoice);
         }
 
@@ -82,7 +93,7 @@ namespace DirectDoc2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", invoice.PersonID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title", invoice.PersonID);
             return View(invoice);
         }
 
@@ -91,7 +102,7 @@ namespace DirectDoc2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="InvoiceID,PersonID,InvoiceNumber,InvoiceDate")] Invoice invoice)
+        public ActionResult Edit([Bind(Include="InvoiceID,PersonID,InvoiceDate,NameOfAid,PolicyNumber,InvoiceTo,Address,PatientBirthDate")] Invoice invoice)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +110,7 @@ namespace DirectDoc2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PersonID = new SelectList(db.Clients, "ID", "FullName", invoice.PersonID);
+            ViewBag.PersonID = new SelectList(db.Clients, "ID", "Title", invoice.PersonID);
             return View(invoice);
         }
 

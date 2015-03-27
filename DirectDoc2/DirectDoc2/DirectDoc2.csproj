@@ -167,9 +167,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ConsultationController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\PostalAddressController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\MedicalController.cs" />
     <Compile Include="Controllers\ModalityController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
@@ -180,12 +180,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201503260602347_InitialCreate.cs" />
-    <Compile Include="Migrations\201503260602347_InitialCreate.Designer.cs">
-      <DependentUpon>201503260602347_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201503270131542_InitialCreate.cs" />
+    <Compile Include="Migrations\201503270131542_InitialCreate.Designer.cs">
+      <DependentUpon>201503270131542_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CardPayment.cs" />
+    <Compile Include="Models\CashPayment.cs" />
+    <Compile Include="Models\ChequePayment.cs" />
     <Compile Include="Models\Consultation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
@@ -268,11 +271,6 @@
     <Content Include="Views\Medical\Details.cshtml" />
     <Content Include="Views\Medical\Edit.cshtml" />
     <Content Include="Views\Medical\Index.cshtml" />
-    <Content Include="Views\Invoice\Create.cshtml" />
-    <Content Include="Views\Invoice\Delete.cshtml" />
-    <Content Include="Views\Invoice\Details.cshtml" />
-    <Content Include="Views\Invoice\Edit.cshtml" />
-    <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\Modality\Create.cshtml" />
     <Content Include="Views\Modality\Delete.cshtml" />
     <Content Include="Views\Modality\Details.cshtml" />
@@ -293,6 +291,11 @@
     <Content Include="Views\Consultation\Details.cshtml" />
     <Content Include="Views\Consultation\Edit.cshtml" />
     <Content Include="Views\Consultation\Index.cshtml" />
+    <Content Include="Views\Invoice\Create.cshtml" />
+    <Content Include="Views\Invoice\Delete.cshtml" />
+    <Content Include="Views\Invoice\Details.cshtml" />
+    <Content Include="Views\Invoice\Edit.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -305,8 +308,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201503260602347_InitialCreate.resx">
-      <DependentUpon>201503260602347_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503270131542_InitialCreate.resx">
+      <DependentUpon>201503270131542_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

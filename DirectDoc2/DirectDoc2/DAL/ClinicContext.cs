@@ -1,5 +1,6 @@
 ﻿using DirectDoc2.Models;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
@@ -25,6 +26,7 @@ namespace DirectDoc2.DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //modelBuilder.Conventions.Remove<IncludeMetadataConvention>();
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Configurations.Add(new TariffConfiguration());
             modelBuilder.Configurations.Add(new ModalityConfiguration());

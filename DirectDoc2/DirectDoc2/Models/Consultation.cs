@@ -21,7 +21,7 @@ namespace DirectDoc2.Models
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Date")]
-        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ConsultationDate { get; set; }
         [Required]
         [DataType(DataType.Time)]
